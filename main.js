@@ -120,6 +120,195 @@ d3.csv("wealth.csv", function(error, data) {
     // let oceaniaCountries = []
     // let leftover = []
 
+    
+
+    // afrique
+    let africaTotal = 0
+    africanCountries.forEach(country => {
+        africaTotal += country.wealth
+    })
+    africanCountries.push({
+        name: 'Africa Total',
+        region: 'Africa',
+        total: africaTotal,
+        percentage: africaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Africa',
+        total: africaTotal,
+        percentage: africaTotal / totalWealth * 100
+    })
+
+    // east asia
+    let eastAsiaTotal = 0
+    eastAsianCountries.forEach(country => {
+        eastAsiaTotal += country.wealth
+    })
+    eastAsianCountries.push({
+        name: 'East Asia Total',
+        region: 'East Asia',
+        total: eastAsiaTotal,
+        percentage: eastAsiaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'East Asia',
+        total: eastAsiaTotal,
+        percentage: eastAsiaTotal / totalWealth * 100
+    })
+
+    // south east asia
+    let southAsiaTotal = 0
+    southEastAsianCountries.forEach(country => {
+        southAsiaTotal += country.wealth
+    })
+    southEastAsianCountries.push({
+        name: 'South Asia Total',
+        region: 'South Asia',
+        total: southAsiaTotal,
+        percentage: southAsiaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'South East Asia',
+        total: southAsiaTotal,
+        percentage: southAsiaTotal / totalWealth * 100
+    })
+
+    // india
+    let indiaTotal = 0
+    indianSubcontinentCountries.forEach(country => {
+        indiaTotal += country.wealth
+    })
+    indianSubcontinentCountries.push({
+        name: 'Indian Subcontinent',
+        region: 'Indian Subcontinent',
+        total: indiaTotal,
+        percentage: indiaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Indian Subcontinent',
+        total: indiaTotal,
+        percentage: indiaTotal / totalWealth * 100
+    })
+
+    // central asia
+    let centralAsiaTotal = 0
+    centralAsianCountries.forEach(country => {
+        centralAsiaTotal += country.wealth
+    })
+    centralAsianCountries.push({
+        name: 'Central Asia',
+        region: 'Central Asia',
+        total: centralAsiaTotal,
+        percentage: centralAsiaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Central Asia',
+        total: centralAsiaTotal,
+        percentage: centralAsiaTotal / totalWealth * 100
+    })
+
+    // mena 
+    let menaTotal = 0
+    menaCountries.forEach(country => {
+        menaTotal += country.wealth
+    })
+    menaCountries.push({
+        name: 'MENA',
+        region: 'MENA',
+        total: menaTotal,
+        percentage: menaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'MENA',
+        total: menaTotal,
+        percentage: menaTotal / totalWealth * 100
+    })
+
+    // eastern europe 
+    let easternEuropeTotal = 0
+    easternEuropeanCountries.forEach(country => {
+        easternEuropeTotal += country.wealth
+    })
+    easternEuropeanCountries.push({
+        name: 'Eastern Europe',
+        region: 'Eastern Europe',
+        total: easternEuropeTotal,
+        percentage: easternEuropeTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Eastern Europe',
+        total: easternEuropeTotal,
+        percentage: easternEuropeTotal / totalWealth * 100
+    })
+
+    // western europe 
+    let westernEuropeTotal = 0
+    westernEuropeanCountries.forEach(country => {
+        westernEuropeTotal += country.wealth
+    })
+    westernEuropeanCountries.push({
+        name: 'Western Europe',
+        region: 'Western Europe',
+        total: westernEuropeTotal,
+        percentage: westernEuropeTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Western Europe',
+        total: westernEuropeTotal,
+        percentage: westernEuropeTotal / totalWealth * 100
+    })
+
+    // north america 
+    let northAmericanTotal = 0
+    northAmericanCountries.forEach(country => {
+        northAmericanTotal += country.wealth
+    })
+    northAmericanCountries.push({
+        name: 'North America',
+        region: 'North America',
+        total: northAmericanTotal,
+        percentage: northAmericanTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'North America',
+        total: northAmericanTotal,
+        percentage: northAmericanTotal / totalWealth * 100
+    })
+
+    // latin america 
+    let latinAmericanTotal = 0
+    latinAmericanCountries.forEach(country => {
+        latinAmericanTotal += country.wealth
+    })
+    latinAmericanCountries.push({
+        name: 'Latin America',
+        region: 'Latin America',
+        total: latinAmericanTotal,
+        percentage: latinAmericanTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Latin America',
+        total: latinAmericanTotal,
+        percentage: latinAmericanTotal / totalWealth * 100
+    })
+
+    // latin america 
+    let oceaniaTotal = 0
+    oceaniaCountries.forEach(country => {
+        oceaniaTotal += country.wealth
+    })
+    oceaniaCountries.push({
+        name: 'Oceania',
+        region: 'Oceania',
+        total: oceaniaTotal,
+        percentage: oceaniaTotal / totalWealth * 100
+    })
+    continentTotals.push({
+        name: 'Oceania',
+        total: oceaniaTotal,
+        percentage: oceaniaTotal / totalWealth * 100
+    })
+
     console.log('africanCountries: ', africanCountries)
     console.log('menaCountries: ', menaCountries)
     console.log('easternEuropeanCountries: ', easternEuropeanCountries)
@@ -132,7 +321,7 @@ d3.csv("wealth.csv", function(error, data) {
     console.log('latinAmericanCountries: ', latinAmericanCountries)
     console.log('oceaniaCountries: ', oceaniaCountries)
     console.log('leftover: ', leftover)
-
+    console.log('continentTotals: ', continentTotals)
 })
 
 
@@ -140,84 +329,4 @@ d3.csv("wealth.csv", function(error, data) {
 
 
 
-// let africaTotal = 0
-// africa.forEach(country => {
-//     africaTotal += country.wealth
-// })
-// africa.push({
-//     name: 'Africa Total',
-//     region: 'Africa',
-//     total: africaTotal,
-//     percentage: africaTotal / totalWealth * 100
-// })
 
-// continentTotals.push({
-//     name: 'Africa',
-//     total: africaTotal,
-//     percentage: africaTotal / totalWealth * 100
-// })
-
-// let asiaPacificTotal = 0
-// asiaPacific.forEach(country => {
-//     asiaPacificTotal += country.wealth
-// })
-// asiaPacific.push({
-//     name: 'Asia-Pacific Total',
-//     region: 'Asia-Pacific',
-//     total: asiaPacificTotal,
-//     percentage: asiaPacificTotal / totalWealth * 100
-// })
-// continentTotals.push({
-//     name: 'Asia-Pacific',
-//     total: asiaPacificTotal,
-//     percentage: asiaPacificTotal / totalWealth * 100
-// })
-
-// let europeTotal = 0
-// europe.forEach(country => {
-//     europeTotal += country.wealth
-// })
-// europe.push({
-//     name: 'Europe Total',
-//     region: 'Europe',
-//     total: europeTotal,
-//     percentage: europeTotal / totalWealth * 100
-// })
-// continentTotals.push({
-//     name: 'Europe',
-//     total: europeTotal,
-//     percentage: europeTotal / totalWealth * 100
-// })
-
-// let northAmericaTotal = 0
-// northAmerica.forEach(country => {
-//     northAmericaTotal += country.wealth
-// })
-// northAmerica.push({
-//     name: 'North America Total',
-//     region: 'North America',
-//     total: northAmericaTotal,
-//     percentage: northAmericaTotal / totalWealth * 100
-// })
-// continentTotals.push({
-//     name: 'North America',
-//     total: northAmericaTotal,
-//     percentage: northAmericaTotal / totalWealth * 100
-// })
-
-// let latinAmericaTotal = 0
-// latinAmerica.forEach(country => {
-//     latinAmericaTotal += country.wealth
-// })
-// latinAmerica.push({
-//     name: 'Latin America Total',
-//     region: 'Latin America',
-//     total: latinAmericaTotal,
-//     percentage: latinAmericaTotal / totalWealth * 100
-// })
-
-// continentTotals.push({
-//     name: 'Latin America',
-//     total: latinAmericaTotal,
-//     percentage: latinAmericaTotal / totalWealth * 100
-// })
