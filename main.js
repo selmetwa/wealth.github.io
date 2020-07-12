@@ -375,24 +375,53 @@ d3.csv("wealth.csv", function(error, data) {
     console.log('continentTotals: ', continentTotals)
 
     // Chart
-        let width = 500,
-        height = 500
+        let width = 1500,
+        height = 900
 
         const svg = d3.select('#chart')
             .append("svg")
             .attr('height', height)
             .attr('width', width)
             .append("g")
-            .attr("transform", "translate(0,0)")
+            .attr('class', 'wrapper')
+            .attr("transform", `translate(${width / 2}, ${height / 2})`)
+        
+        console.log('sorted countries by wealth: ', countries.sort((a,b) => a.wealth - b.wealth))
+        const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 175])
+        // the simulation is a collection of forces
+        // about where we want our circles to go
+        // and how we want our circles to interact
+        const simulation = d3.forceSimulation()
+            .force('x', d3.forceX().strength(0.005))
+            .force('y', d3.forceY().strength(0.005))
+            .force("collide", d3.forceCollide(function(d) {
+                return radius(d.wealth) + 2
+            }))
 
         let circles = svg.selectAll('.dot')
             .data(countries)
             .enter().append("circle")
             .attr('class', 'dot')
-            .attr("r", 10)
+            .attr("r", function(d) {
+                return radius(d.wealth)
+            })
             .attr("fill", "lightblue")
-            .attr("cx", 100)
-            .attr("cy", 100)
+        
+        simulation.nodes(countries)
+            .on('tick', ticked)
+
+        function ticked() {
+            circles
+            .attr("cx", function(d) {
+                return d.x
+            })
+            .attr("cy", function(d) {
+                return d.y
+            })
+        }
+
+        let dots = document.querySelectorAll('.dot')
+        console.log('dots', Array.from(dots))
 })
 
 
