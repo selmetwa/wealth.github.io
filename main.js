@@ -48,8 +48,9 @@ let easternEurope = [
 /* |||||||||||||||||| REGIONS |||||||||||||||||||| */
 // set the dimensions and margins of the graph
 d3.csv("wealth.csv", function(error, data) {
-    const countries = data;
+    // const countries = data;
     let realCountries = []
+    let countries = []
     let continentTotals = []
     let totalWealth = 0;
     
@@ -65,7 +66,7 @@ d3.csv("wealth.csv", function(error, data) {
     let latinAmericanCountries = []
     let oceaniaCountries = []
     let leftover = []
-    countries.forEach(country => {
+    data.forEach(country => {
         let countryObj = {
             name: country.Country,
             region: country.Region,
@@ -78,49 +79,98 @@ d3.csv("wealth.csv", function(error, data) {
     realCountries.forEach(country => {
         let countryWealth = country.wealth
         if (africa.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Africa',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             africanCountries.push(country)
         } else if (mena.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Middle East & North Africa',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             menaCountries.push(country)
         } else if (eastAsia.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'East Asia',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             eastAsianCountries.push(country)
         } else if (easternEurope.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Eastern Europe',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             easternEuropeanCountries.push(country)
         } else if (westernEurope.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Western Europe',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             westernEuropeanCountries.push(country)
         } else if (india.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Indian Subcontinent',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             indianSubcontinentCountries.push(country)
         } else if (centralAsia.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Central Asia',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             centralAsianCountries.push(country)
         } else if (southEastAsia.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'South East Asia',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             southEastAsianCountries.push(country)
         } else if (oceania.includes(country.name)) {
+            countries.push({
+                name: country.name,
+                region: 'Oceania',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             oceaniaCountries.push(country)
         } else if (country.region == 'North America') {
+            countries.push({
+                name: country.name,
+                region: 'North America',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             northAmericanCountries.push(country)
         } else if (country.region == 'Latin America') {
+            countries.push({
+                name: country.name,
+                region: 'Latin America',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
             latinAmericanCountries.push(country)
         } else {
             leftover.push(country)
         }
         totalWealth += countryWealth
     })
-    console.log('realCountries: ', realCountries)
-
-  
-    // let africanCountries = []
-    // let menaCountries = []
-    // let easternEuropeanCountries = []
-    // let westernEuropeanCountries = []
-    // let eastAsianCountries = []
-    // let centralAsianCountries = []
-    // let southEastAsianCountries = []
-    // let indianSubcontinentCountries = []
-    // let northAmericanCountries = []
-    // let latinAmericanCountries = []
-    // let oceaniaCountries = []
-    // let leftover = []
-
-    
 
     // afrique
     let africaTotal = 0
@@ -309,6 +359,7 @@ d3.csv("wealth.csv", function(error, data) {
         percentage: oceaniaTotal / totalWealth * 100
     })
 
+    console.log('countries: ', countries)
     console.log('africanCountries: ', africanCountries)
     console.log('menaCountries: ', menaCountries)
     console.log('easternEuropeanCountries: ', easternEuropeanCountries)
@@ -322,6 +373,26 @@ d3.csv("wealth.csv", function(error, data) {
     console.log('oceaniaCountries: ', oceaniaCountries)
     console.log('leftover: ', leftover)
     console.log('continentTotals: ', continentTotals)
+
+    // Chart
+        let width = 500,
+        height = 500
+
+        const svg = d3.select('#chart')
+            .append("svg")
+            .attr('height', height)
+            .attr('width', width)
+            .append("g")
+            .attr("transform", "translate(0,0)")
+
+        let circles = svg.selectAll('.dot')
+            .data(countries)
+            .enter().append("circle")
+            .attr('class', 'dot')
+            .attr("r", 10)
+            .attr("fill", "lightblue")
+            .attr("cx", 100)
+            .attr("cy", 100)
 })
 
 
