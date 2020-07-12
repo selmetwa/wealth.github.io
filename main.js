@@ -151,6 +151,9 @@ d3.csv("wealth.csv", function(error, data) {
             })
             oceaniaCountries.push(country)
         } else if (country.region == 'North America') {
+            console.log('type of: ', typeof country.percentage)
+            let percentage = country.percentage.toString()
+            console.log('percentage: ', percentage)
             countries.push({
                 name: country.name,
                 region: 'North America',
@@ -159,6 +162,7 @@ d3.csv("wealth.csv", function(error, data) {
             })
             northAmericanCountries.push(country)
         } else if (country.region == 'Latin America') {
+            let percentage = toString(country.percentage)
             countries.push({
                 name: country.name,
                 region: 'Latin America',
@@ -376,7 +380,20 @@ d3.csv("wealth.csv", function(error, data) {
 
     // Chart
         let width = 1500,
-        height = 900
+        height = 1000
+
+        const tip = d3.tip()
+        .attr('class', 'first-d3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+            return `
+            <div class="scatterplot-tooltip">
+                <h1>Country: ${d.name}</h1>
+                <h3>Wealth in Billions: $${d.wealth}</h1>
+                <h3>Percentage of the World's Wealth: ${d.percentage.toString().slice(0, 4)}%</h1>
+            </div>
+            `
+        })
 
         const svg = d3.select('#chart')
             .append("svg")
@@ -386,8 +403,10 @@ d3.csv("wealth.csv", function(error, data) {
             .attr('class', 'wrapper')
             .attr("transform", `translate(${width / 2}, ${height / 2})`)
         
-        console.log('sorted countries by wealth: ', countries.sort((a,b) => a.wealth - b.wealth))
+        svg.call(tip);
+
         const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 175])
+
         // the simulation is a collection of forces
         // about where we want our circles to go
         // and how we want our circles to interact
@@ -395,7 +414,7 @@ d3.csv("wealth.csv", function(error, data) {
             .force('x', d3.forceX().strength(0.005))
             .force('y', d3.forceY().strength(0.005))
             .force("collide", d3.forceCollide(function(d) {
-                return radius(d.wealth) + 2
+                return radius(d.wealth) + 1
             }))
 
         let circles = svg.selectAll('.dot')
@@ -406,6 +425,8 @@ d3.csv("wealth.csv", function(error, data) {
                 return radius(d.wealth)
             })
             .attr("fill", "lightblue")
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
         
         simulation.nodes(countries)
             .on('tick', ticked)
@@ -419,9 +440,6 @@ d3.csv("wealth.csv", function(error, data) {
                 return d.y
             })
         }
-
-        let dots = document.querySelectorAll('.dot')
-        console.log('dots', Array.from(dots))
 })
 
 
