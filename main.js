@@ -47,8 +47,10 @@ let easternEurope = [
 
 /* |||||||||||||||||| REGIONS |||||||||||||||||||| */
 // set the dimensions and margins of the graph
+
+function loadBubbles() {
+document.querySelector('#chart').innerHTML = ''
 d3.csv("wealth.csv", function(error, data) {
-    // const countries = data;
     let realCountries = []
     let countries = []
     let continentTotals = []
@@ -151,9 +153,7 @@ d3.csv("wealth.csv", function(error, data) {
             })
             oceaniaCountries.push(country)
         } else if (country.region == 'North America') {
-            console.log('type of: ', typeof country.percentage)
             let percentage = country.percentage.toString()
-            console.log('percentage: ', percentage)
             countries.push({
                 name: country.name,
                 region: 'North America',
@@ -363,24 +363,24 @@ d3.csv("wealth.csv", function(error, data) {
         percentage: oceaniaTotal / totalWealth * 100
     })
 
-    console.log('countries: ', countries)
-    console.log('africanCountries: ', africanCountries)
-    console.log('menaCountries: ', menaCountries)
-    console.log('easternEuropeanCountries: ', easternEuropeanCountries)
-    console.log('westernEuropeanCountries: ', westernEuropeanCountries)
-    console.log('easternEuropeanCountries: ', easternEuropeanCountries)
-    console.log('eastAsianCountries: ', eastAsianCountries)
-    console.log('southEastAsianCountries: ', southEastAsianCountries)
-    console.log('indianSubcontinentCountries: ', indianSubcontinentCountries)
-    console.log('northAmericanCountries: ', northAmericanCountries)
-    console.log('latinAmericanCountries: ', latinAmericanCountries)
-    console.log('oceaniaCountries: ', oceaniaCountries)
-    console.log('leftover: ', leftover)
-    console.log('continentTotals: ', continentTotals)
+    // console.log('countries: ', countries)
+    // console.log('africanCountries: ', africanCountries)
+    // console.log('menaCountries: ', menaCountries)
+    // console.log('easternEuropeanCountries: ', easternEuropeanCountries)
+    // console.log('westernEuropeanCountries: ', westernEuropeanCountries)
+    // console.log('easternEuropeanCountries: ', easternEuropeanCountries)
+    // console.log('eastAsianCountries: ', eastAsianCountries)
+    // console.log('southEastAsianCountries: ', southEastAsianCountries)
+    // console.log('indianSubcontinentCountries: ', indianSubcontinentCountries)
+    // console.log('northAmericanCountries: ', northAmericanCountries)
+    // console.log('latinAmericanCountries: ', latinAmericanCountries)
+    // console.log('oceaniaCountries: ', oceaniaCountries)
+    // console.log('leftover: ', leftover)
+    // console.log('continentTotals: ', continentTotals)
 
     // Chart
-        let width = 1500,
-        height = 1000
+        let width = 1800,
+        height = 1400
 
         const tip = d3.tip()
         .attr('class', 'first-d3-tip')
@@ -405,7 +405,7 @@ d3.csv("wealth.csv", function(error, data) {
         
         svg.call(tip);
 
-        const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 175])
+        const radius = d3.scaleSqrt().domain([1, 105990]).range([3, 225])
 
         // the simulation is a collection of forces
         // about where we want our circles to go
@@ -414,9 +414,10 @@ d3.csv("wealth.csv", function(error, data) {
             .force('x', d3.forceX().strength(0.005))
             .force('y', d3.forceY().strength(0.005))
             .force("collide", d3.forceCollide(function(d) {
-                return radius(d.wealth) + 2
+                return radius(d.wealth) + 4
             }))
 
+        let targetCountries = getSpecificCountries()
         let circles = svg.selectAll('.dot')
             .data(countries)
             .enter().append("circle")
@@ -443,14 +444,26 @@ d3.csv("wealth.csv", function(error, data) {
             })
         }
 
+        d3.selectAll('.dot')
+        .filter(function(d) {return targetCountries.includes(d.name )})
+        .classed('specificCountry', function(d) {return targetCountries.includes(d.name)})
+
 
 $('.country-select').selectpicker();
 
+function getSpecificCountries() {
+    const values = Array.from(document.querySelectorAll('.country-select option:checked')).map(el => el.value);
+    return values
+}
+let values = getSpecificCountries()
+
 })
 
+}
+
+window.onload = function() {
+    loadBubbles();
+};
 
 
-
-
-
-
+document.querySelector('.country-select').onchange = loadBubbles

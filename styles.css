@@ -16,3 +16,7 @@ html {
     margin-top: 5vh!important;
     margin-left: 15vh!important;
 }
+.specificCountry {
+    fill: red!important;
+    stroke: red!important;
+}
