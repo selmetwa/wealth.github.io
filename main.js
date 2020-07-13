@@ -389,8 +389,8 @@ d3.csv("wealth.csv", function(error, data) {
             return `
             <div class="scatterplot-tooltip">
                 <h1>Country: ${d.name}</h1>
-                <h3>Wealth in Billions: $${d.wealth}</h1>
-                <h3>Percentage of the World's Wealth: ${d.percentage.toString().slice(0, 4)}%</h1>
+                <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
+                <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
             </div>
             `
         })
@@ -414,7 +414,7 @@ d3.csv("wealth.csv", function(error, data) {
             .force('x', d3.forceX().strength(0.005))
             .force('y', d3.forceY().strength(0.005))
             .force("collide", d3.forceCollide(function(d) {
-                return radius(d.wealth) + 1
+                return radius(d.wealth) + 2
             }))
 
         let circles = svg.selectAll('.dot')
@@ -424,7 +424,9 @@ d3.csv("wealth.csv", function(error, data) {
             .attr("r", function(d) {
                 return radius(d.wealth)
             })
-            .attr("fill", "lightblue")
+            .attr("fill", '#EBEBEB')
+            .attr("stroke", '#cccccc')
+            .attr('stroke-width', '1.5px')
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
         
@@ -440,6 +442,10 @@ d3.csv("wealth.csv", function(error, data) {
                 return d.y
             })
         }
+
+
+$('.country-select').selectpicker();
+
 })
 
 

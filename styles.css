@@ -5,11 +5,14 @@
 html {
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 #chart {
     border: 1px solid red;
+    margin-top: 2vh!important;
 }
-.wrapper {
-    border: 1px solid blue!important;
+.chart-select-wrapper {
+    border: 1px solid blue;
+    margin-top: 5vh!important;
+    margin-left: 15vh!important;
 }
