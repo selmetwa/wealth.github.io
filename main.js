@@ -84,30 +84,54 @@ d3.csv("wealth.csv", function(error, data) {
             countries.push({
                 name: country.name,
                 region: 'Africa',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
             africanCountries.push(country)
-        } else if (mena.includes(country.name)) {
+        } else if (mena.includes(country.name) && country.name != 'Israel') {
             countries.push({
                 name: country.name,
                 region: 'Middle East & North Africa',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
             menaCountries.push(country)
-        } else if (eastAsia.includes(country.name)) {
+        } else if (country.name == 'Israel') {
+            countries.push({
+                name: country.name,
+                region: 'Middle East & North Africa',
+                position: 'Global North',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
+            menaCountries.push(country)
+        }
+            else if (eastAsia.includes(country.name) && country.name !== 'Japan' && country.name !== 'Korea') {
             countries.push({
                 name: country.name,
                 region: 'East Asia',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
             eastAsianCountries.push(country)
-        } else if (easternEurope.includes(country.name)) {
+        } else if (country.name == 'Japan' || country.name == 'Korea') {
+            countries.push({
+                name: country.name,
+                region: 'East Asia',
+                position: 'Global North',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
+            eastAsianCountries.push(country)
+        }
+         else if (easternEurope.includes(country.name)) {
             countries.push({
                 name: country.name,
                 region: 'Eastern Europe',
+                position: 'Global North',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
@@ -116,6 +140,7 @@ d3.csv("wealth.csv", function(error, data) {
             countries.push({
                 name: country.name,
                 region: 'Western Europe',
+                position: 'Global North',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
@@ -124,6 +149,7 @@ d3.csv("wealth.csv", function(error, data) {
             countries.push({
                 name: country.name,
                 region: 'Indian Subcontinent',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
@@ -132,31 +158,55 @@ d3.csv("wealth.csv", function(error, data) {
             countries.push({
                 name: country.name,
                 region: 'Central Asia',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
             centralAsianCountries.push(country)
-        } else if (southEastAsia.includes(country.name)) {
+        } else if (southEastAsia.includes(country.name) && country.name != 'Singapore') {
             countries.push({
                 name: country.name,
                 region: 'South East Asia',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
             southEastAsianCountries.push(country)
-        } else if (oceania.includes(country.name)) {
+        } else if (country.name == 'Singapore') {
+            countries.push({
+                name: country.name,
+                region: 'South East Asia',
+                position: 'Global North',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
+            southEastAsianCountries.push(country)
+        }
+        else if (oceania.includes(country.name) && country.name != 'Australia' && country.name != 'New Zealand') {
             countries.push({
                 name: country.name,
                 region: 'Oceania',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
             oceaniaCountries.push(country)
-        } else if (country.region == 'North America') {
+        } else if (country.name == 'Australia' || country.name == 'New Zealand') {
+            countries.push({
+                name: country.name,
+                region: 'Oceania',
+                position: 'Global North',
+                wealth: country.wealth,
+                percentage: country.percentage
+            })
+            oceaniaCountries.push(country)
+        }
+        else if (country.region == 'North America') {
             let percentage = country.percentage.toString()
             countries.push({
                 name: country.name,
                 region: 'North America',
+                position: 'Global North',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
@@ -166,6 +216,7 @@ d3.csv("wealth.csv", function(error, data) {
             countries.push({
                 name: country.name,
                 region: 'Latin America',
+                position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
@@ -363,7 +414,12 @@ d3.csv("wealth.csv", function(error, data) {
         percentage: oceaniaTotal / totalWealth * 100
     })
 
+    const globalNorth = countries.filter(country => country.position == 'Global North')
+    const globalSouth = countries.filter(country => country.position == 'Global South')
+    // console.log('globalNorth: ', globalNorth)
+    // console.log('globalSouth: ', globalSouth)
     // console.log('countries: ', countries)
+    // console.log('data: ', data)
     // console.log('africanCountries: ', africanCountries)
     // console.log('menaCountries: ', menaCountries)
     // console.log('easternEuropeanCountries: ', easternEuropeanCountries)
