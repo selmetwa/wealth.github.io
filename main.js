@@ -457,20 +457,44 @@ d3.csv("wealth.csv", function(error, data) {
             .attr('width', width)
             .append("g")
             .attr('class', 'wrapper')
-            .attr("transform", `translate(${width / 2}, ${height / 2})`)
+            // .attr("transform", `translate(${width / 2}, ${height / 2})`)
+            // .attr("transform ", translate(0,0))
+            .attr("transform", `translate(0,${height / 3})`)
         
         svg.call(tip);
 
-        const radius = d3.scaleSqrt().domain([1, 105990]).range([3, 225])
+        const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 190])
 
         // the simulation is a collection of forces
         // about where we want our circles to go
         // and how we want our circles to interact
+        const forceX = d3.forceX(function(d) {
+            if (d.position === 'Global North') {
+                return 500
+            } else {
+                return 1400
+            }
+        }).strength(0.05)
+
+        d3.select('.combine').on('click', () => {
+            console.log('clicked combine')
+            simulation
+                .force("x", d3.forceX(width / 2).strength(0.05))
+                .alphaTarget(.05)
+                .restart()
+        })
+        d3.select('.global').on('click', () => {
+            console.log('clicked global')
+            simulation
+                .force("x", forceX)
+                .alphaTarget(.09)
+                .restart()
+        })
         const simulation = d3.forceSimulation()
-            .force('x', d3.forceX().strength(0.005))
-            .force('y', d3.forceY().strength(0.005))
+            .force("x", d3.forceX(width / 2).strength(0.05))
+            .force('y', d3.forceY().strength(0.05))
             .force("collide", d3.forceCollide(function(d) {
-                return radius(d.wealth) + 4
+                return radius(d.wealth) + 6 
             }))
 
         let targetCountries = getSpecificCountries()

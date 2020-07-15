@@ -12,9 +12,13 @@ html {
     margin-top: 2vh!important;
 }
 .chart-select-wrapper {
-    border: 1px solid blue;
     margin-top: 5vh!important;
     margin-left: 15vh!important;
+    display: flex;
+    flex-direction: row;
+}
+.buttons-wrapper {
+    margin-left: 3vw;
 }
 .specificCountry {
     fill: red!important;
