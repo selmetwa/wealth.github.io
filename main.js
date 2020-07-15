@@ -418,7 +418,7 @@ d3.csv("wealth.csv", function(error, data) {
     const globalSouth = countries.filter(country => country.position == 'Global South')
     // console.log('globalNorth: ', globalNorth)
     // console.log('globalSouth: ', globalSouth)
-    // console.log('countries: ', countries)
+    console.log('countries: ', countries)
     // console.log('data: ', data)
     // console.log('africanCountries: ', africanCountries)
     // console.log('menaCountries: ', menaCountries)
@@ -435,8 +435,8 @@ d3.csv("wealth.csv", function(error, data) {
     // console.log('continentTotals: ', continentTotals)
 
     // Chart
-        let width = 1800,
-        height = 1400
+        let width = 2000,
+        height = 2000
 
         const tip = d3.tip()
         .attr('class', 'first-d3-tip')
@@ -459,11 +459,11 @@ d3.csv("wealth.csv", function(error, data) {
             .attr('class', 'wrapper')
             // .attr("transform", `translate(${width / 2}, ${height / 2})`)
             // .attr("transform ", translate(0,0))
-            .attr("transform", `translate(0,${height / 3})`)
+            .attr("transform", `translate(0,${height / 4.5})`)
         
         svg.call(tip);
 
-        const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 190])
+        const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 150])
 
         // the simulation is a collection of forces
         // about where we want our circles to go
@@ -476,18 +476,67 @@ d3.csv("wealth.csv", function(error, data) {
             }
         }).strength(0.05)
 
+        const forceXAgain = d3.forceX(function(d) {
+            if (d.region === 'Africa' || d.region === 'Oceania') {
+                return 600
+            } else if (d.region === 'South East Asia' || d.region == 'East Asia') {
+                return 200
+            }
+            else if (d.region === 'Western Europe' || d.region == 'Middle East & North Africa') {
+                return 1000
+            }
+            else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
+                return 1400
+            }
+            else if (d.region === 'Latin America' || d.region == 'Indian Subcontinent') {
+                return 1700
+            }
+            else {
+                return 200
+            }
+        }).strength(0.05)
+
+        const forceYAgain = d3.forceY(function(d) {
+            if (
+                d.region === 'Africa' 
+                || d.region === 'South East Asia' 
+                || d.region == 'Western Europe'
+                || d.region == 'Eastern Europe'
+                || d.region == 'Latin America'
+                ) {
+                return -250
+            } else if (d.region === 'North America') {
+                return 750
+            }
+            else {
+                return 200
+            }
+        }).strength(0.05)
+
+
         d3.select('.combine').on('click', () => {
             console.log('clicked combine')
             simulation
-                .force("x", d3.forceX(width / 2).strength(0.05))
+                .force("x", d3.forceX(width / 2).strength(0.1))
+                .force('y', d3.forceY().strength(0.1))
                 .alphaTarget(.05)
+                .restart()
+        })
+        d3.select('.region').on('click', () => {
+            console.log('clicked global')
+            simulation
+                .force("x", forceXAgain)
+                .force("y", forceYAgain)
+                .alphaTarget(.3)
                 .restart()
         })
         d3.select('.global').on('click', () => {
             console.log('clicked global')
             simulation
                 .force("x", forceX)
-                .alphaTarget(.09)
+                .force('y', d3.forceY().strength(0.05))
+                // .force("y", forceYAgain)
+                .alphaTarget(.1)
                 .restart()
         })
         const simulation = d3.forceSimulation()
