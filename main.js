@@ -49,6 +49,18 @@ let easternEurope = [
 // set the dimensions and margins of the graph
 
 function loadBubbles() {
+let totalPopulation = 0;
+let globalNorthPop = 0;
+let globalSouthPop = 0;
+d3.csv('pop.csv', function(error, pop) {
+    console.log('pop: ', pop)
+    pop.forEach(country => {
+        let pop = Number(country.population.replace(/,/g, ''))
+        // console.log('pop: ', pop)
+        totalPopulation += pop
+    })
+    console.log('totalPopulation: ', totalPopulation)
+
 document.querySelector('#chart').innerHTML = ''
 d3.csv("wealth.csv", function(error, data) {
     let realCountries = []
@@ -415,7 +427,29 @@ d3.csv("wealth.csv", function(error, data) {
     })
 
     const globalNorth = countries.filter(country => country.position == 'Global North')
+    let globalNorthCountries = []
+    globalNorth.forEach(country => {
+        globalNorthCountries.push(country.name)
+    })
+    pop.forEach(country => {
+        if (globalNorthCountries.includes(country.indicator)) {
+            let pop = Number(country.population.replace(/,/g, ''))
+            globalNorthPop += pop
+        }
+    })
     const globalSouth = countries.filter(country => country.position == 'Global South')
+    let globalSouthCountries = []
+    globalSouth.forEach(country => {
+        globalSouthCountries.push(country.name)
+    })
+    pop.forEach(country => {
+        if (globalSouthCountries.includes(country.indicator)) {
+            let pop = Number(country.population.replace(/,/g, ''))
+            globalSouthPop += pop
+        }
+    })
+    console.log('globalNorthPop: ', globalNorthPop)
+    console.log('globalSouthPop: ', globalSouthPop)
     // console.log('globalNorth: ', globalNorth)
     // console.log('globalSouth: ', globalSouth)
     console.log('countries: ', countries)
@@ -516,6 +550,10 @@ d3.csv("wealth.csv", function(error, data) {
 
         d3.select('.combine').on('click', () => {
             console.log('clicked combine')
+            let textWrappers = document.querySelectorAll('.text-wrapper')
+            textWrappers.forEach(wrapper => {
+                wrapper.style.display = 'none'
+            })
             simulation
                 .force("x", d3.forceX(width / 2).strength(0.1))
                 .force('y', d3.forceY().strength(0.1))
@@ -532,9 +570,14 @@ d3.csv("wealth.csv", function(error, data) {
         })
         d3.select('.global').on('click', () => {
             console.log('clicked global')
+            let textWrappers = document.querySelectorAll('.text-wrapper')
+                textWrappers.forEach(wrapper => {
+                    wrapper.style.display = 'block'
+                })
             simulation
                 .force("x", forceX)
-                .force('y', d3.forceY().strength(0.05))
+                // .force('y', d3.forceY(0).strength(0.05))
+                .force('y', d3.forceY(-100).strength(0.05))
                 // .force("y", forceYAgain)
                 .alphaTarget(.1)
                 .restart()
@@ -585,6 +628,24 @@ function getSpecificCountries() {
     return values
 }
 let values = getSpecificCountries()
+console.log('globalNorth: ', globalNorth)
+let globalNorthTotalPercentage = 0;
+let globalSouthTotalPercentage = 0;
+globalNorth.forEach(country => {
+    globalNorthTotalPercentage += country.percentage
+})
+globalSouth.forEach(country => {
+    globalSouthTotalPercentage += country.percentage
+})
+console.log('globalNorthTotalPercentage: ', globalNorthTotalPercentage)
+console.log('globalSouthTotalPercentage: ', globalSouthTotalPercentage)
+
+document.querySelector('.north-percentage').innerHTML = `Percent of Global Weath <span>${globalNorthTotalPercentage.toString().slice(0, 4)}%</span>`
+document.querySelector('.north-population').innerHTML = `Percent of Worlds Population <span>${((globalNorthPop / totalPopulation) * 100).toString().slice(0, 4)}%</span>`
+
+document.querySelector('.south-percentage').innerHTML = `Percent of Global Weath <span>${globalSouthTotalPercentage.toString().slice(0, 4)}%</span>`
+document.querySelector('.south-population').innerHTML = `Percent of Worlds Population <span>${((globalSouthPop / totalPopulation) * 100).toString().slice(0, 4)}%</span>`
+})
 
 })
 
@@ -593,6 +654,5 @@ let values = getSpecificCountries()
 window.onload = function() {
     loadBubbles();
 };
-
 
 document.querySelector('.country-select').onchange = loadBubbles

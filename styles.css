@@ -8,8 +8,7 @@ html {
     overflow-x: hidden;
 }
 #chart {
-    border: 1px solid red;
-    margin-top: 2vh!important;
+    /* margin-top: -13vh!important; */
 }
 .chart-select-wrapper {
     margin-top: 5vh!important;
@@ -23,4 +22,49 @@ html {
 .specificCountry {
     fill: red!important;
     stroke: red!important;
+}
+.north-south-wrapper {
+    width: 100vw;
+    height: min-content;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+}
+.text-wrapper {
+    width: 15vw;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0px 1px 5px rgba(34, 34, 34, 0.5);
+    padding-bottom: 1%;
+    display: none;
+}
+.text-wrapper h1 {
+    font-size: 1.2rem;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    color: #333;
+    margin-top: 7%;
+    margin-left: 5%;
+}
+.text-wrapper h3 {
+    font-size: 1rem;
+    margin-left: 5%;
+    font-weight: 100;
+    opacity: .9;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    color: #333;
+}
+.text-wrapper h3 span {
+    font-weight: 900;
+}
+.negative span {
+    color: #D4353A!important;
+}
+.positive span {
+    color: #70C1B3!important;
+}
+.north-wrapper {
+    margin-left: 20vw;
+}
+.south-wrapper {
+    margin-left: 30vw;
 }
