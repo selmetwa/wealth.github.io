@@ -136,6 +136,7 @@ d3.csv("wealth.csv", function(error, data) {
             })
             eastAsianCountries.push(country)
         } else if (country.name == 'Japan' || country.name == 'Korea') {
+            console.log(country.name)
             countries.push({
                 name: country.name,
                 region: 'East Asia',
@@ -181,7 +182,7 @@ d3.csv("wealth.csv", function(error, data) {
                 percentage: country.percentage
             })
             centralAsianCountries.push(country)
-        } else if (pacific.includes(country.name) && country.name != 'Singapore') {
+        } else if (pacific.includes(country.name) && country.name != 'Singapore' && country.name !== 'Australia' && country.name !== 'New Zealand') {
             countries.push({
                 name: country.name,
                 region: 'Pacific',
@@ -190,26 +191,8 @@ d3.csv("wealth.csv", function(error, data) {
                 percentage: country.percentage
             })
             pacificCountries.push(country)
-        } else if (country.name == 'Singapore') {
-            countries.push({
-                name: country.name,
-                region: 'Pacific',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage
-            })
-            pacificCountries.push(country)
-        }
-        else if (pacific.includes(country.name) && country.name != 'Australia' && country.name != 'New Zealand') {
-            countries.push({
-                name: country.name,
-                region: 'Pacific',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage
-            })
-            pacificCountries.push(country)
-        } else if (country.name == 'Australia' || country.name == 'New Zealand') {
+        } else if (country.name == 'Singapore' || country.name == 'Australia' || country.name == 'New Zealand') {
+            console.log(country.name)
             countries.push({
                 name: country.name,
                 region: 'Pacific',
@@ -646,10 +629,10 @@ console.log('globalNorthTotalPercentage: ', globalNorthTotalPercentage)
 console.log('globalSouthTotalPercentage: ', globalSouthTotalPercentage)
 
 document.querySelector('.north-percentage').innerHTML = `Percent of Global Weath <span>${globalNorthTotalPercentage.toString().slice(0, 4)}%</span>`
-document.querySelector('.north-population').innerHTML = `Percent of Worlds Population <span>${((globalNorthPop / totalPopulation) * 100).toString().slice(0, 4)}%</span>`
+document.querySelector('.north-population').innerHTML = `Percent of Worlds Population <span>${((globalNorthPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 
 document.querySelector('.south-percentage').innerHTML = `Percent of Global Weath <span>${globalSouthTotalPercentage.toString().slice(0, 4)}%</span>`
-document.querySelector('.south-population').innerHTML = `Percent of Worlds Population <span>${((globalSouthPop / totalPopulation) * 100).toString().slice(0, 4)}%</span>`
+document.querySelector('.south-population').innerHTML = `Percent of Worlds Population <span>${((globalSouthPop / totalPopulation) * 100 + 1).toString().slice(0, 4)}%</span>`
 })
 
 })
