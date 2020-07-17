@@ -34,6 +34,11 @@ let oceania = [
     'Tuvalu', 'Marshall Islands', 'New Caledonia', 'French Polynesia', 'Timor-Leste', 'Solomon Islands', 'American Samoa'
 ]
 
+let pacific = [
+    'Brunei', 'Cambodia', 'East Timor', 'Singapore', 'Thailand', 'Vietnam', 'Philippines', 'Malaysia', 'Laos', 'Myanmar', 
+    'Indonesia', 'Australia', 'New Zealand', 'Fiji', 'Samoa', 'Micronesia', 'Vanuatu', 'Guam', 'Kiribati', 'Tonga', 'Palau', 'Papua New Guinea',
+    'Tuvalu', 'Marshall Islands', 'New Caledonia', 'French Polynesia', 'Timor-Leste', 'Solomon Islands', 'American Samoa'
+]
 let westernEurope = [
     'France', 'Germany', 'Spain', 'Portugal', 'Belgium', 'Austria', 'Andorra', 
     'Denmark', 'Finland', 'Iceland', 'Norway', 'Sweden', 'United Kingdom', 'Italy', 'Switzerland', 'Netherlands', 'Luxembourg',
@@ -79,6 +84,7 @@ d3.csv("wealth.csv", function(error, data) {
     let northAmericanCountries = []
     let latinAmericanCountries = []
     let oceaniaCountries = []
+    let pacificCountries = []
     let leftover = []
     data.forEach(country => {
         let countryObj = {
@@ -175,43 +181,43 @@ d3.csv("wealth.csv", function(error, data) {
                 percentage: country.percentage
             })
             centralAsianCountries.push(country)
-        } else if (southEastAsia.includes(country.name) && country.name != 'Singapore') {
+        } else if (pacific.includes(country.name) && country.name != 'Singapore') {
             countries.push({
                 name: country.name,
-                region: 'South East Asia',
+                region: 'Pacific',
                 position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
-            southEastAsianCountries.push(country)
+            pacificCountries.push(country)
         } else if (country.name == 'Singapore') {
             countries.push({
                 name: country.name,
-                region: 'South East Asia',
+                region: 'Pacific',
                 position: 'Global North',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
-            southEastAsianCountries.push(country)
+            pacificCountries.push(country)
         }
-        else if (oceania.includes(country.name) && country.name != 'Australia' && country.name != 'New Zealand') {
+        else if (pacific.includes(country.name) && country.name != 'Australia' && country.name != 'New Zealand') {
             countries.push({
                 name: country.name,
-                region: 'Oceania',
+                region: 'Pacific',
                 position: 'Global South',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
-            oceaniaCountries.push(country)
+            pacificCountries.push(country)
         } else if (country.name == 'Australia' || country.name == 'New Zealand') {
             countries.push({
                 name: country.name,
-                region: 'Oceania',
+                region: 'Pacific',
                 position: 'Global North',
                 wealth: country.wealth,
                 percentage: country.percentage
             })
-            oceaniaCountries.push(country)
+            pacificCountries.push(country)
         }
         else if (country.region == 'North America') {
             let percentage = country.percentage.toString()
@@ -453,6 +459,7 @@ d3.csv("wealth.csv", function(error, data) {
     // console.log('globalNorth: ', globalNorth)
     // console.log('globalSouth: ', globalSouth)
     console.log('countries: ', countries)
+    console.log('pacificCountries: ', pacificCountries)
     // console.log('data: ', data)
     // console.log('africanCountries: ', africanCountries)
     // console.log('menaCountries: ', menaCountries)
@@ -511,9 +518,9 @@ d3.csv("wealth.csv", function(error, data) {
         }).strength(0.05)
 
         const forceXAgain = d3.forceX(function(d) {
-            if (d.region === 'Africa' || d.region === 'Oceania') {
+            if (d.region === 'Africa' || d.region === 'North America') {
                 return 600
-            } else if (d.region === 'South East Asia' || d.region == 'East Asia') {
+            } else if (d.region === 'Pacific' || d.region == 'East Asia') {
                 return 200
             }
             else if (d.region === 'Western Europe' || d.region == 'Middle East & North Africa') {
@@ -533,15 +540,13 @@ d3.csv("wealth.csv", function(error, data) {
         const forceYAgain = d3.forceY(function(d) {
             if (
                 d.region === 'Africa' 
-                || d.region === 'South East Asia' 
+                || d.region === 'Pacific' 
                 || d.region == 'Western Europe'
                 || d.region == 'Eastern Europe'
                 || d.region == 'Latin America'
                 ) {
                 return -250
-            } else if (d.region === 'North America') {
-                return 750
-            }
+            } 
             else {
                 return 200
             }
