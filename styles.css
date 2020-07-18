@@ -5,6 +5,7 @@
 html {
     margin: 0;
     padding: 0;
+    height: 100vh;
     overflow-x: hidden;
 }
 #chart {
@@ -56,12 +57,12 @@ html {
 .text-wrapper h3 span {
     font-weight: 900;
 }
-.negative span {
+/* .negative span {
     color: #D4353A!important;
 }
 .positive span {
     color: #70C1B3!important;
-}
+} */
 .north-wrapper {
     margin-left: 20vw;
 }

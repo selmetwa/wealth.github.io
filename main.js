@@ -482,7 +482,7 @@ d3.csv("wealth.csv", function(error, data) {
     // console.log('latinAmericanCountries: ', latinAmericanCountries)
     // console.log('oceaniaCountries: ', oceaniaCountries)
     // console.log('leftover: ', leftover)
-    // console.log('continentTotals: ', continentTotals)
+    console.log('continentTotals: ', continentTotals)
 
     // Chart
         let width = 2000,
@@ -514,7 +514,7 @@ d3.csv("wealth.csv", function(error, data) {
         
         svg.call(tip);
 
-        const radius = d3.scaleSqrt().domain([1, 105990]).range([4, 150])
+        const radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
 
         // the simulation is a collection of forces
         // about where we want our circles to go
@@ -528,12 +528,12 @@ d3.csv("wealth.csv", function(error, data) {
         }).strength(0.05)
 
         const forceXAgain = d3.forceX(function(d) {
-            if (d.region === 'Africa' || d.region === 'North America') {
+            if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
                 return 600
             } else if (d.region === 'Pacific' || d.region == 'East Asia') {
                 return 200
             }
-            else if (d.region === 'Western Europe' || d.region == 'Middle East & North Africa') {
+            else if (d.region === 'Western Europe' || d.region == 'North America') {
                 return 1000
             }
             else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
@@ -558,7 +558,7 @@ d3.csv("wealth.csv", function(error, data) {
                 return -250
             } 
             else {
-                return 200
+                return 500
             }
         }).strength(0.05)
 
@@ -716,12 +716,65 @@ pop.forEach(country => {
     }
 })
 
+// bottom row
+let eastAsiaPop = 0
+let realEastAsianCountries = []
+eastAsianCountries.forEach(country => { realEastAsianCountries.push(country.name)})
+pop.forEach(country => {
+    if (realEastAsianCountries.includes(country.indicator)) {
+        let pop = Number(country.population.replace(/,/g, ''))
+        eastAsiaPop += pop
+    }
+})
+
+let menaPop = 0
+let realMenaCountries = []
+menaCountries.forEach(country => { realMenaCountries.push(country.name)})
+pop.forEach(country => {
+    if (realMenaCountries.includes(country.indicator)) {
+        let pop = Number(country.population.replace(/,/g, ''))
+        menaPop += pop
+    }
+})
+
+let northAmericaPop = 0
+let realNorthAmericanCountries = []
+northAmericanCountries.forEach(country => { realNorthAmericanCountries.push(country.name)})
+pop.forEach(country => {
+    if (realNorthAmericanCountries.includes(country.indicator)) {
+        let pop = Number(country.population.replace(/,/g, ''))
+        northAmericaPop += pop
+    }
+})
+
+let centralAsiaPop = 0
+let realCentralAsianCountries = []
+centralAsianCountries.forEach(country => { realCentralAsianCountries.push(country.name)})
+pop.forEach(country => {
+    if (realCentralAsianCountries.includes(country.indicator)) {
+        let pop = Number(country.population.replace(/,/g, ''))
+        centralAsiaPop += pop
+    }
+})
+
+let indianPop = 0
+let realIndianCountries = []
+indianSubcontinentCountries.forEach(country => { realIndianCountries.push(country.name)})
+pop.forEach(country => {
+    if (realIndianCountries.includes(country.indicator)) {
+        let pop = Number(country.population.replace(/,/g, ''))
+        indianPop += pop
+    }
+})
+
+// global north vs global south
 document.querySelector('.north-percentage').innerHTML = `Percent of Global Weath <span>${globalNorthTotalPercentage.toString().slice(0, 4)}%</span>`
 document.querySelector('.north-population').innerHTML = `Percent of Worlds Population <span>${((globalNorthPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 
 document.querySelector('.south-percentage').innerHTML = `Percent of Global Weath <span>${globalSouthTotalPercentage.toString().slice(0, 4)}%</span>`
 document.querySelector('.south-population').innerHTML = `Percent of Worlds Population <span>${((globalSouthPop / totalPopulation) * 100 + 1).toString().slice(0, 4)}%</span>`
 
+// top row
 document.querySelector('.pacific-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[9].percentage.toString().slice(0, 4)}%</span>`
 document.querySelector('.africa-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[0].percentage.toString().slice(0, 4)}%</span>`
 document.querySelector('.western-europe-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[6].percentage.toString().slice(0, 4)}%</span>`
@@ -733,6 +786,19 @@ document.querySelector('.africa-population').innerHTML = `Percent of Worlds Popu
 document.querySelector('.western-europe-population').innerHTML = `Percent of Worlds Population <span>${((westernEuropePop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 document.querySelector('.eastern-europe-population').innerHTML = `Percent of Worlds Population <span>${((easternEuropePop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 document.querySelector('.latin-population').innerHTML = `Percent of Worlds Population <span>${((latinPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
+
+// bottom row 
+document.querySelector('.east-asia-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[1].percentage.toString().slice(0, 4)}%</span>`
+document.querySelector('.mena-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[4].percentage.toString().slice(0, 4)}%</span>`
+document.querySelector('.north-america-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[7].percentage.toString().slice(0, 4)}%</span>`
+document.querySelector('.central-asia-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[3].percentage.toString().slice(0, 4)}%</span>`
+document.querySelector('.indian-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[2].percentage.toString().slice(0, 4)}%</span>`
+
+document.querySelector('.east-asia-population').innerHTML = `Percent of Worlds Population <span>${((eastAsiaPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
+document.querySelector('.mena-population').innerHTML = `Percent of Worlds Population <span>${((menaPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
+document.querySelector('.north-america-population').innerHTML = `Percent of Worlds Population <span>${((northAmericaPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
+document.querySelector('.central-asia-population').innerHTML = `Percent of Worlds Population <span>${((centralAsiaPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
+document.querySelector('.indian-population').innerHTML = `Percent of Worlds Population <span>${((indianPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 
 })
 
