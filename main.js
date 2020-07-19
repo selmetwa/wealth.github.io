@@ -527,6 +527,14 @@ d3.csv("wealth.csv", function(error, data) {
             }
         }).strength(0.05)
 
+        const forceY = d3.forceY(function(d) {
+            if (d.position === 'Global North') {
+                return -100
+            } else {
+                return -150
+            }
+        }).strength(0.05)
+
         const forceXAgain = d3.forceX(function(d) {
             if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
                 return 600
@@ -572,6 +580,10 @@ d3.csv("wealth.csv", function(error, data) {
             regionTextWrapper.forEach(wrapper => {
                 wrapper.style.display = 'none'
             })
+            let regionWrapper = document.querySelectorAll('.regions-wrapper');
+            regionWrapper.forEach(wrapper => {
+                wrapper.style.display = 'none'
+            })
             simulation
                 .force("x", d3.forceX(width / 2).strength(0.1))
                 .force('y', d3.forceY().strength(0.1))
@@ -579,13 +591,17 @@ d3.csv("wealth.csv", function(error, data) {
                 .restart()
         })
         d3.select('.region').on('click', () => {
+            let regionWrapper = document.querySelectorAll('.regions-wrapper');
+            regionWrapper.forEach(wrapper => {
+                wrapper.style.display = 'flex'
+            })
             let textWrappers = document.querySelectorAll('.text-wrapper')
             textWrappers.forEach(wrapper => {
                 wrapper.style.display = 'none'
             })
             let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
             regionTextWrapper.forEach(wrapper => {
-                wrapper.style.display = 'block'
+                wrapper.style.display = 'flex'
             })
             simulation
                 .force("x", forceXAgain)
@@ -602,17 +618,20 @@ d3.csv("wealth.csv", function(error, data) {
             regionTextWrapper.forEach(wrapper => {
                 wrapper.style.display = 'none'
             })
+
+            let regionWrapper = document.querySelectorAll('.regions-wrapper');
+            regionWrapper.forEach(wrapper => {
+                wrapper.style.display = 'none'
+            })
             simulation
                 .force("x", forceX)
-                // .force('y', d3.forceY(0).strength(0.05))
-                .force('y', d3.forceY(-100).strength(0.05))
-                // .force("y", forceYAgain)
+                .force('y', forceY)
                 .alphaTarget(.1)
                 .restart()
         })
         const simulation = d3.forceSimulation()
             .force("x", d3.forceX(width / 2).strength(0.05))
-            .force('y', d3.forceY().strength(0.05))
+            .force('y', d3.forceY(-100).strength(0.05))
             .force("collide", d3.forceCollide(function(d) {
                 return radius(d.wealth) + 6 
             }))
@@ -625,9 +644,9 @@ d3.csv("wealth.csv", function(error, data) {
             .attr("r", function(d) {
                 return radius(d.wealth)
             })
-            .attr("fill", '#EBEBEB')
-            .attr("stroke", '#cccccc')
-            .attr('stroke-width', '1.5px')
+            .attr("fill", '#CACAE3')
+            .attr("stroke", '#BCBCDC')
+            .attr('stroke-width', '3px')
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
         

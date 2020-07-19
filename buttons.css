@@ -1,0 +1,29 @@
+.buttons-wrapper {
+    margin-left: 3vw;
+    width: 30vw;
+}
+
+.button {
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 3px;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    border: 0;
+}
+.active {
+    background-color: #5F5FAB;
+    color: #fafafa;
+}
+.inactive {
+    background-color: rgb(235, 235, 235);
+    color: rgb(179, 179, 179);
+}
+.region {
+    margin-left: 4%;
+}
+.global {
+    margin-left: 4%;
+}
