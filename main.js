@@ -631,7 +631,7 @@ d3.csv("wealth.csv", function(error, data) {
         })
         const simulation = d3.forceSimulation()
             .force("x", d3.forceX(width / 2).strength(0.05))
-            .force('y', d3.forceY(-100).strength(0.05))
+            .force('y', d3.forceY().strength(0.05))
             .force("collide", d3.forceCollide(function(d) {
                 return radius(d.wealth) + 6 
             }))
