@@ -538,7 +538,7 @@ d3.csv("wealth.csv", function(error, data) {
         const forceXAgain = d3.forceX(function(d) {
             if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
                 return 600
-            } else if (d.region === 'Pacific' || d.region == 'East Asia') {
+            } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
                 return 200
             }
             else if (d.region === 'Western Europe' || d.region == 'North America') {
@@ -547,7 +547,7 @@ d3.csv("wealth.csv", function(error, data) {
             else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
                 return 1400
             }
-            else if (d.region === 'Latin America' || d.region == 'Indian Subcontinent') {
+            else if (d.region === 'Latin America' || d.region == 'East Asia') {
                 return 1700
             }
             else {
