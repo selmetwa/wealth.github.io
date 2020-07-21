@@ -53,6 +53,10 @@ let easternEurope = [
 /* |||||||||||||||||| REGIONS |||||||||||||||||||| */
 // set the dimensions and margins of the graph
 
+let regionIsClicked
+let globalIsClicked
+let combineIsClicked
+
 function loadBubbles() {
 let totalPopulation = 0;
 let globalNorthPop = 0;
@@ -570,8 +574,14 @@ d3.csv("wealth.csv", function(error, data) {
             }
         }).strength(0.05)
 
+        const simulation = d3.forceSimulation()
+            .force("x", d3.forceX(width / 2).strength(0.05))
+            .force('y', d3.forceY().strength(0.05))
+            .force("collide", d3.forceCollide(function(d) {
+                return radius(d.wealth) + 6 
+            }))
 
-        d3.select('.combine').on('click', () => {
+        const combine = () => {
             let textWrappers = document.querySelectorAll('.text-wrapper')
             textWrappers.forEach(wrapper => {
                 wrapper.style.display = 'none'
@@ -589,8 +599,8 @@ d3.csv("wealth.csv", function(error, data) {
                 .force('y', d3.forceY().strength(0.1))
                 .alphaTarget(.05)
                 .restart()
-        })
-        d3.select('.region').on('click', () => {
+        }
+        const regions = () => {
             let regionWrapper = document.querySelectorAll('.regions-wrapper');
             regionWrapper.forEach(wrapper => {
                 wrapper.style.display = 'flex'
@@ -608,33 +618,54 @@ d3.csv("wealth.csv", function(error, data) {
                 .force("y", forceYAgain)
                 .alphaTarget(.3)
                 .restart()
+        }
+        const breakGlobal = () => {
+            let textWrappers = document.querySelectorAll('.text-wrapper')
+            textWrappers.forEach(wrapper => {
+                wrapper.style.display = 'block'
+            })
+        let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
+        regionTextWrapper.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+
+        let regionWrapper = document.querySelectorAll('.regions-wrapper');
+        regionWrapper.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+        simulation
+            .force("x", forceX)
+            .force('y', forceY)
+            .alphaTarget(.1)
+            .restart()
+        }
+        d3.select('.combine').on('click', () => {
+            regionIsClicked = false
+            combineIsClicked = true
+            globalIsClicked = false
+            combine()
+        })
+        d3.select('.region').on('click', () => {
+            regionIsClicked = true
+            combineIsClicked = false
+            globalIsClicked = false
+            regions()
         })
         d3.select('.global').on('click', () => {
-            let textWrappers = document.querySelectorAll('.text-wrapper')
-                textWrappers.forEach(wrapper => {
-                    wrapper.style.display = 'block'
-                })
-            let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
-            regionTextWrapper.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-
-            let regionWrapper = document.querySelectorAll('.regions-wrapper');
-            regionWrapper.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-            simulation
-                .force("x", forceX)
-                .force('y', forceY)
-                .alphaTarget(.1)
-                .restart()
+            regionIsClicked = false
+            combineIsClicked = false
+            globalIsClicked = true
+            breakGlobal()
         })
-        const simulation = d3.forceSimulation()
-            .force("x", d3.forceX(width / 2).strength(0.05))
-            .force('y', d3.forceY().strength(0.05))
-            .force("collide", d3.forceCollide(function(d) {
-                return radius(d.wealth) + 6 
-            }))
+
+        if (regionIsClicked) {
+            regions()
+        } else if (globalIsClicked) {
+            breakGlobal()
+        } else if (combineIsClicked){
+            combine()
+        }
+        
 
         let targetCountries = getSpecificCountries()
         let circles = svg.selectAll('.dot')
@@ -823,6 +854,8 @@ document.querySelector('.indian-population').innerHTML = `Percent of Worlds Popu
 
 })
 
+let charts = document.querySelectorAll('#chart');
+console.log('charts: ', charts)
 }
 
 window.onload = function() {

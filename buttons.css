@@ -1,6 +1,15 @@
-.buttons-wrapper {
+.real-button-wrapper {
     margin-left: 3vw;
     width: 30vw;
+}
+.real-button-wrapper h3 {
+    font-size: 1.2rem;
+    margin-left: 5%;
+    font-weight: 100;
+    opacity: .9;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    color: #0a2540;
+    visibility: hidden;
 }
 
 .button {

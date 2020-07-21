@@ -17,10 +17,21 @@ html {
     display: flex;
     flex-direction: row;
 }
-
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+.select-wrapper h3 {
+    font-size: 1.2rem;
+    margin-left: 0%;
+    font-weight: 500;
+    opacity: .9;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    color: #0a2540;
+}
 .specificCountry {
-    fill: red!important;
-    stroke: red!important;
+    fill: #1b1b46!important;
+    stroke: #1b1b46!important;
 }
 .north-south-wrapper {
     width: 100vw;
