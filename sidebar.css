@@ -1,0 +1,11 @@
+.charts-wrapper {
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+}
+.sidebar {
+    width: 500px;
+    margin-left: 20vw;
+    height: 500px;
+    border: 1px solid red;
+}

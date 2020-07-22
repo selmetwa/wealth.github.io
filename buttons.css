@@ -36,3 +36,9 @@
 .global {
     margin-left: 4%;
 }
+@media screen and (max-width: 1900px) {
+    .real-button-wrapper {
+        margin-left: 3vw;
+        width: 40vw;
+    }
+}

@@ -57,7 +57,11 @@ let regionIsClicked
 let globalIsClicked
 let combineIsClicked
 
+const isLaptop = window.innerWidth <= 1900 ? true : false;
+const isMobile = window.matchMedia('screen and (max-width: 768px)').matches
+
 function loadBubbles() {
+    console.log('isLaptop: ', isLaptop)
 let totalPopulation = 0;
 let globalNorthPop = 0;
 let globalSouthPop = 0;
@@ -489,8 +493,17 @@ d3.csv("wealth.csv", function(error, data) {
     console.log('continentTotals: ', continentTotals)
 
     // Chart
-        let width = 2000,
-        height = 2000
+        let width,
+        height
+
+        if (isLaptop) {
+            width = 1500
+            height = 1300
+        } else {
+            width = 2000
+            height = 2000
+        }
+        
 
         const tip = d3.tip()
         .attr('class', 'first-d3-tip')
@@ -518,60 +531,121 @@ d3.csv("wealth.csv", function(error, data) {
         
         svg.call(tip);
 
-        const radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
+        let radius
+        if (isLaptop) {
+            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+        } else {
+            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
+        }
+        // radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
 
         // the simulation is a collection of forces
         // about where we want our circles to go
         // and how we want our circles to interact
         const forceX = d3.forceX(function(d) {
-            if (d.position === 'Global North') {
-                return 500
+            if (isLaptop) {
+                if (d.position === 'Global North') {
+                    return 350
+                } else {
+                    return 1000
+                }
             } else {
-                return 1400
+                if (d.position === 'Global North') {
+                    return 500
+                } else {
+                    return 1400
+                }
             }
+            
         }).strength(0.05)
 
         const forceY = d3.forceY(function(d) {
-            if (d.position === 'Global North') {
-                return -100
+            if (isLaptop) {
+                if (d.position === 'Global North') {
+                    return -10
+                } else {
+                    return -50
+                }
             } else {
-                return -150
+                if (d.position === 'Global North') {
+                    return -100
+                } else {
+                    return -150
+                }
             }
+            
         }).strength(0.05)
 
         const forceXAgain = d3.forceX(function(d) {
-            if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
-                return 600
-            } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
-                return 200
+            if (isLaptop) {
+                if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
+                    return 450
+                } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
+                    return 150
+                }
+                else if (d.region === 'Western Europe' || d.region == 'North America') {
+                    return 750
+                }
+                else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
+                    return 1050
+                }
+                else if (d.region === 'Latin America' || d.region == 'East Asia') {
+                    return 1275
+                }
+                else {
+                    return 200
+                }
+            } else {
+                if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
+                    return 600
+                } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
+                    return 200
+                }
+                else if (d.region === 'Western Europe' || d.region == 'North America') {
+                    return 1000
+                }
+                else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
+                    return 1400
+                }
+                else if (d.region === 'Latin America' || d.region == 'East Asia') {
+                    return 1700
+                }
+                else {
+                    return 200
+                }
             }
-            else if (d.region === 'Western Europe' || d.region == 'North America') {
-                return 1000
-            }
-            else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
-                return 1400
-            }
-            else if (d.region === 'Latin America' || d.region == 'East Asia') {
-                return 1700
-            }
-            else {
-                return 200
-            }
+            
         }).strength(0.05)
 
         const forceYAgain = d3.forceY(function(d) {
-            if (
-                d.region === 'Africa' 
-                || d.region === 'Pacific' 
-                || d.region == 'Western Europe'
-                || d.region == 'Eastern Europe'
-                || d.region == 'Latin America'
-                ) {
-                return -250
-            } 
-            else {
-                return 500
+            if (isLaptop) {
+                if (
+                    d.region === 'Africa' 
+                    || d.region === 'Pacific' 
+                    || d.region == 'Western Europe'
+                    || d.region == 'Eastern Europe'
+                    || d.region == 'Latin America'
+                    ) {
+                    return -130
+                } 
+                else {
+                    return 440
+                }
+            } else {
+                if (
+                    d.region === 'Africa' 
+                    || d.region === 'Pacific' 
+                    || d.region == 'Western Europe'
+                    || d.region == 'Eastern Europe'
+                    || d.region == 'Latin America'
+                    ) {
+                    return -250
+                } 
+                else {
+                    return 500
+                }
             }
+            
         }).strength(0.05)
 
         const simulation = d3.forceSimulation()

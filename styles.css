@@ -16,6 +16,7 @@ html {
     margin-left: 15vh!important;
     display: flex;
     flex-direction: row;
+    margin-bottom: 10vh;
 }
 .select-wrapper {
     display: flex;
@@ -30,8 +31,8 @@ html {
     color: #0a2540;
 }
 .specificCountry {
-    fill: #1b1b46!important;
-    stroke: #1b1b46!important;
+    fill: #EFBD6B!important;
+    stroke: #EFBD6B!important;
 }
 .north-south-wrapper {
     width: 100vw;
