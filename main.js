@@ -1022,17 +1022,62 @@ document.querySelector('.country-select').onchange = loadBubbles
 
 
 function loadSecondChart() {
-    let testData = [
+    let percentileData = [
         {
-            name: 'One Percent',
-            percentage: 45
+            name: 'Top 1%',
+            percentage: 45,
+            position: 'Top',
+            row: '1',
+            realWealth: 360474 * .45,
+            wealth: `$${360474 * .45} Billion`,
+            population: 1,
         },
         {
-            name: 'Ninety Nine Percent',
-            percentage: 55
-        }
+            name: 'Bottom 99%',
+            percentage: 55,
+            position: 'Bottom',
+            row: '1',
+            realWealth: 360474 * .55,
+            wealth: `$${360474 * .55} Billion`,
+            population: 99
+        },
+        {
+            name: 'Top 5%',
+            percentage: 70,
+            position: 'Top',
+            row: '2',
+            realWealth: 360474 * .70,
+            wealth: `$${360474 * .70} Billion`,
+            population: 5
+        },
+        {
+            name: 'Bottom 95%',
+            percentage: 30,
+            position: 'Bottom',
+            row: '2',
+            realWealth: 360474 * .30,
+            wealth: `$${360474 * .30} Billion`,
+            population: 95
+        },
+        {
+            name: 'Top 10%',
+            percentage: 82,
+            position: 'Top',
+            row: '3',
+            realWealth: 360474 * .82,
+            wealth: `$${360474 * .82} Billion`,
+            population: 10
+        },
+        {
+            name: 'Bottom 90%',
+            percentage: 18,
+            position: 'Bottom',
+            row: '3',
+            realWealth: 360474 * .18,
+            wealth: `$${360474 * .18} Billion`,
+            population: 90
+        },
     ]
-
     let width,
     height
 
@@ -1044,6 +1089,13 @@ function loadSecondChart() {
         height = 2000
     }
 
+    let radius
+        if (isLaptop) {
+            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+        } else {
+            radius = d3.scaleSqrt().domain([1, 105990]).range([1, 125])
+        }
+
     const svg = d3.select('#second-chart')
         .append("svg")
         .attr('height', height)
@@ -1052,21 +1104,31 @@ function loadSecondChart() {
         .attr("transform", `translate(0,0)`)
 
     let circles = svg.selectAll('.secondDot')
-        .data(testData)
+        .data(percentileData)
         .enter().append("circle")
         .attr('class', 'secondDot')
-        .attr("r", 120)
+        .attr("r", function(d) {
+            return radius(d.realWealth)
+        })
         .attr("fill", '#CACAE3')
         .attr("stroke", '#BCBCDC')
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.name == 'One Percent') {
-                return 200
+            if (d.position == 'Top') {
+                return 400
             } else {
-                return 600
+                return 1400
             }
         })
-        .attr('cy', 300)
+        .attr('cy', function(d) {
+            if (d.row == '1') {
+                return 200
+            } else if (d.row == '2') {
+                return 600
+            } else {
+                return 1200
+            }
+        })
 }
 
 
