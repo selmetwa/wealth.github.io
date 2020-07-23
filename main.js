@@ -70,9 +70,12 @@ d3.csv('pop.csv', function(error, pop) {
         let pop = Number(country.population.replace(/,/g, ''))
         totalPopulation += pop
     })
-
+d3.csv('extra.csv', function(error, extra) {
+    console.log('extra: ', extra)
+})
 document.querySelector('#chart').innerHTML = ''
 d3.csv("wealth.csv", function(error, data) {
+    console.log('data: ', data)
     let realCountries = []
     let countries = []
     let continentTotals = []
@@ -101,190 +104,198 @@ d3.csv("wealth.csv", function(error, data) {
         realCountries.push(countryObj)
     })
 
-    realCountries.forEach(country => {
-        let countryWealth = country.wealth
-        if (africa.includes(country.name)) {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Africa',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            africanCountries.push(country)
-        } else if (mena.includes(country.name) && country.name != 'Israel') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) {
-                currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))         
-            } 
-            countries.push({
-                name: country.name,
-                region: 'Middle East & North Africa',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            menaCountries.push(country)
-        } else if (country.name == 'Israel') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: `${country.name}/Palestine`,
-                region: 'Middle East & North Africa',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            menaCountries.push(country)
-        }
-            else if (eastAsia.includes(country.name) && country.name !== 'Japan' && country.name !== 'Korea') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'East Asia',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            eastAsianCountries.push(country)
-        } else if (country.name == 'Japan' || country.name == 'Korea') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'East Asia',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            eastAsianCountries.push(country)
-        }
-         else if (easternEurope.includes(country.name)) {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Eastern Europe',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            easternEuropeanCountries.push(country)
-        } else if (westernEurope.includes(country.name)) {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Western Europe',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            westernEuropeanCountries.push(country)
-        } else if (india.includes(country.name)) {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Indian Subcontinent',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            indianSubcontinentCountries.push(country)
-        } else if (centralAsia.includes(country.name)) {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Central Asia',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            centralAsianCountries.push(country)
-        } else if (pacific.includes(country.name) && country.name != 'Singapore' && country.name !== 'Australia' && country.name !== 'New Zealand') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Pacific',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            pacificCountries.push(country)
-        } else if (country.name == 'Singapore' || country.name == 'Australia' || country.name == 'New Zealand') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            countries.push({
-                name: country.name,
-                region: 'Pacific',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            pacificCountries.push(country)
-        }
-        else if (country.region == 'North America') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            let percentage = country.percentage.toString()
-            countries.push({
-                name: country.name,
-                region: 'North America',
-                position: 'Global North',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            northAmericanCountries.push(country)
-        } else if (country.region == 'Latin America') {
-            let currentCountry = pop.filter(test => test.indicator == country.name)
-            let currentPopulation
-            if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-            let percentage = toString(country.percentage)
-            countries.push({
-                name: country.name,
-                region: 'Latin America',
-                position: 'Global South',
-                wealth: country.wealth,
-                percentage: country.percentage,
-                population: currentPopulation
-            })
-            latinAmericanCountries.push(country)
-        } else {
-            leftover.push(country)
-        }
-        totalWealth += countryWealth
+    realCountries.slice(0, realCountries.length).forEach(country => {
+            // let countryWealth = country.wealth
+            let countryWealth 
+            if (country.wealth) {
+                countryWealth = country.wealth
+            } else {
+                countryWealth = 0
+            }
+            if (africa.includes(country.name)) {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Africa',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                africanCountries.push(country)
+            } else if (mena.includes(country.name) && country.name != 'Israel') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) {
+                    currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))         
+                } 
+                countries.push({
+                    name: country.name,
+                    region: 'Middle East & North Africa',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                menaCountries.push(country)
+            } else if (country.name == 'Israel') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: `${country.name}/Palestine`,
+                    region: 'Middle East & North Africa',
+                    position: 'Global North',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                menaCountries.push(country)
+            }
+                else if (eastAsia.includes(country.name) && country.name !== 'Japan' && country.name !== 'Korea') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'East Asia',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                eastAsianCountries.push(country)
+            } else if (country.name == 'Japan' || country.name == 'Korea') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'East Asia',
+                    position: 'Global North',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                eastAsianCountries.push(country)
+            }
+             else if (easternEurope.includes(country.name)) {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Eastern Europe',
+                    position: 'Global North',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                easternEuropeanCountries.push(country)
+            } else if (westernEurope.includes(country.name)) {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Western Europe',
+                    position: 'Global North',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                westernEuropeanCountries.push(country)
+            } else if (india.includes(country.name)) {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Indian Subcontinent',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                indianSubcontinentCountries.push(country)
+            } else if (centralAsia.includes(country.name)) {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Central Asia',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                centralAsianCountries.push(country)
+            } else if (pacific.includes(country.name) && country.name != 'Singapore' && country.name !== 'Australia' && country.name !== 'New Zealand') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Pacific',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                pacificCountries.push(country)
+            } else if (country.name == 'Singapore' || country.name == 'Australia' || country.name == 'New Zealand') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                countries.push({
+                    name: country.name,
+                    region: 'Pacific',
+                    position: 'Global North',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                pacificCountries.push(country)
+            }
+            else if (country.region == 'North America') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                let percentage = country.percentage.toString()
+                countries.push({
+                    name: country.name,
+                    region: 'North America',
+                    position: 'Global North',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                northAmericanCountries.push(country)
+            } else if (country.region == 'Latin America') {
+                let currentCountry = pop.filter(test => test.indicator == country.name)
+                let currentPopulation
+                if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
+                let percentage = toString(country.percentage)
+                countries.push({
+                    name: country.name,
+                    region: 'Latin America',
+                    position: 'Global South',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: currentPopulation
+                })
+                latinAmericanCountries.push(country)
+            } else {
+                console.log('country: ', country)
+                countries.push(country)
+                leftover.push(country)
+            }
+            totalWealth += countryWealth
     })
-
+    console.log('countries: ', countries)
     // afrique
     let africaTotal = 0
     africanCountries.forEach(country => {
@@ -490,8 +501,7 @@ d3.csv("wealth.csv", function(error, data) {
     // console.log('latinAmericanCountries: ', latinAmericanCountries)
     // console.log('oceaniaCountries: ', oceaniaCountries)
     // console.log('leftover: ', leftover)
-    console.log('continentTotals: ', continentTotals)
-
+    console.log('totalWealth: ', totalWealth)
     // Chart
         let width,
         height

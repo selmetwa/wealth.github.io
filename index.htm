@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="tip.css">
     <link rel="stylesheet" href="buttons.css">
     <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="header.css">
     <!-- <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="main.js"></script>
     <script defer src="d3-tip.js"></script> -->
@@ -38,6 +39,18 @@
     <script defer src="d3-tip.js"></script>
 </head>
 <body>
+    <div class="header">
+        <div class="title-wrapper">
+            <img src="assets/man.jpeg" class="man">
+            <h1>Visualize the World's Wealth</h1>
+        </div>
+        <div class="paragraph-wrapper">
+            <p>There is a lot of money in the world, $360474 Billion to be specific ($36 Trillion).
+                Interact with the chart below to see who owns what.
+            </p>
+            <p class="note">Note: Due to screensize limitations, the bubbles are not to scale</p>
+        </div>
+    </div>
     <div class="chart-select-wrapper">
         <div class="select-wrapper">
             <h3>Highlight a Specific Country</h3>
@@ -248,8 +261,8 @@
             <h3>You cant see me</h3>
             <div class="buttons-wrapper">
                 <button class="combine button active">Combine</button>
-                <button class="region button inactive">Divide by Region</button>
                 <button class="global button inactive">Global North vs Global South</button>
+                <button class="region button inactive">Divide by Region</button>
             </div>
         </div>
     </div>

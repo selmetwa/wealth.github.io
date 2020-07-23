@@ -1,4 +1,10 @@
 Country,Region,Wealth ($B)
+onePercent,top,"$45"
+ninetyNinePercent,bottom,"$55"
+fivePercent,top,"$70"
+ninetyFivePercent,bottom,"$30"
+tenPercent,top,"$82"
+ninetyPercent,bottom,"$18"
 United States,North America,"$105,990"
 China,China,"$63,827"
 Japan,Asia-Pacific,"$24,992"

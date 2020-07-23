@@ -7,6 +7,7 @@ html {
     padding: 0;
     height: 100vh;
     overflow-x: hidden;
+    /* background-color: #fff!important; */
 }
 #chart {
     margin-top: 3vh!important;
@@ -41,18 +42,37 @@ html {
     display: flex;
     flex-direction: row;
 }
-.text-wrapper {
+/* .text-wrapper {
     width: 15vw;
     padding: 10px;    
     background-color: #f5f5f5;
     box-shadow: 0px 1px 3px rgba(34, 34, 34, 0.2); 
     border-top: 3px solid #5F5FAB;
     display: none;
+} */
+.text-wrapper {
+    width: 15vw;
+    padding: 10px;    
+    background-color: #5F5FAB;
+    box-shadow: 0px 5px 1px #38386B; 
+    border-top: 3px solid #5F5FAB;
+    display: none;
 }
+/* .region-text-wrapper {
+    width: 12vw;
+    background-color: #5F5FAB;
+    box-shadow: 0px 1px 3px rgba(34, 34, 34, 0.2); 
+    border-top: 3px solid #5F5FAB;
+    padding-bottom: 1%;
+    padding: 10px;
+    flex-direction: column;
+    margin-left: 7%;
+    display: none;
+} */
 .text-wrapper h1 {
     font-size: 1.2rem;
     font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    color: #0a2540;
+    color: #fff;
     margin-top: 3%;
     font-weight: 900;
     margin-left: 5%;
@@ -63,17 +83,11 @@ html {
     font-weight: 100;
     opacity: .9;
     font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    color: #0a2540;
+    color: #fff;
 }
 .text-wrapper h3 span {
     font-weight: 900;
 }
-/* .negative span {
-    color: #D4353A!important;
-}
-.positive span {
-    color: #70C1B3!important;
-} */
 .north-wrapper {
     margin-left: 19vw;
 }
