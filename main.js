@@ -95,13 +95,24 @@ d3.csv("wealth.csv", function(error, data) {
     let pacificCountries = []
     let leftover = []
     data.forEach(country => {
-        let countryObj = {
-            name: country.Country,
-            region: country.Region,
-            wealth: Number(country['Wealth ($B)'].slice(1,country['Wealth ($B)'].length).replace(/,/g, '')),
-            percentage: (Number(country['Wealth ($B)'].slice(1,country['Wealth ($B)'].length).replace(/,/g, '')) / 360474 * 100)
+        if (country.Region != 'top' && country.Region != 'bottom') {
+            let countryObj = {
+                name: country.Country,
+                region: country.Region,
+                wealth: Number(country['Wealth ($B)'].slice(1,country['Wealth ($B)'].length).replace(/,/g, '')),
+                percentage: (Number(country['Wealth ($B)'].slice(1,country['Wealth ($B)'].length).replace(/,/g, '')) / 360474 * 100)
+            }
+            realCountries.push(countryObj)
+        } else {
+                let countryObj = {
+                    name: country.Country,
+                    region: country.Region,
+                    wealth: 360474 * ((Number(country['Wealth ($B)'].slice(1,3))) / 100),
+                    percentage: (Number(country['Wealth ($B)'].slice(1,3))),
+                    population: '1%'
+                }
+            realCountries.push(countryObj)
         }
-        realCountries.push(countryObj)
     })
 
     realCountries.slice(0, realCountries.length).forEach(country => {
@@ -112,7 +123,16 @@ d3.csv("wealth.csv", function(error, data) {
             } else {
                 countryWealth = 0
             }
-            if (africa.includes(country.name)) {
+            if (country.name == 'onePercent') {
+                countries.push({
+                    name: country.name,
+                    region: 'Top',
+                    wealth: country.wealth,
+                    percentage: country.percentage,
+                    population: '1%'
+                })
+            }
+            else if (africa.includes(country.name)) {
                 let currentCountry = pop.filter(test => test.indicator == country.name)
                 let currentPopulation
                 if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
@@ -519,14 +539,36 @@ d3.csv("wealth.csv", function(error, data) {
         .attr('class', 'first-d3-tip')
         .offset([-10, 0])
         .html(function(d) {
-            return `
-            <div class="scatterplot-tooltip">
-                <h1>Country: ${d.name}</h1>
-                <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
-                <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
-                <h3>Percentage of the World's Population: <span>${(d.population / totalPopulation * 100).toString().slice(0, 4)}%</span></h1>
-            </div>
-            `
+            if (d.name != 'onePercent' && d.name != 'ninetyNinePercent') {
+                return `
+                <div class="scatterplot-tooltip">
+                    <h1>Country: ${d.name}</h1>
+                    <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
+                    <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
+                    <h3>Percentage of the World's Population: <span>${(d.population / totalPopulation * 100).toString().slice(0, 4)}%</span></h1>
+                </div>
+                `
+            } else if (d.name == 'onePercent') {
+                return `
+                <div class="scatterplot-tooltip">
+                    <h1>Country: Top One Percent</h1>
+                    <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
+                    <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
+                    <h3>Percentage of the World's Population: <span>1%</span></h1>
+                </div>
+                `
+            }
+            else if (d.name == 'ninetyNinePercent') {
+                return `
+                <div class="scatterplot-tooltip">
+                    <h1>Country: Bottom 99 Percent</h1>
+                    <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
+                    <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
+                    <h3>Percentage of the World's Population: <span>99%</span></h1>
+                </div>
+                `
+            }
+            
         })
 
         const svg = d3.select('#chart')
@@ -553,6 +595,7 @@ d3.csv("wealth.csv", function(error, data) {
         // about where we want our circles to go
         // and how we want our circles to interact
         const forceX = d3.forceX(function(d) {
+            console.log('d: ', d)
             if (isLaptop) {
                 if (d.position === 'Global North') {
                     return 350
@@ -566,7 +609,28 @@ d3.csv("wealth.csv", function(error, data) {
                     return 1400
                 }
             }
-            
+        }).strength(0.05)
+
+        /*
+            onePercent,top,"$45"
+            ninetyNinePercent,bottom,"$55"
+        */
+
+        const testForceX = d3.forceX(function(d) {
+            console.log('d: ', d)
+            if (isLaptop) {
+                if (d.position === 'Global North') {
+                    return 350
+                } else {
+                    return 1000
+                }
+            } else {
+                if (d.name === 'onePercent') {
+                    return 500
+                } else if (d.name === 'ninetyNinePercent') {
+                    return 1400
+                }
+            }
         }).strength(0.05)
 
         const forceY = d3.forceY(function(d) {
@@ -662,7 +726,12 @@ d3.csv("wealth.csv", function(error, data) {
             .force("x", d3.forceX(width / 2).strength(0.05))
             .force('y', d3.forceY().strength(0.05))
             .force("collide", d3.forceCollide(function(d) {
-                return radius(d.wealth) + 6 
+                if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
+                    console.log('hits')
+                    return 0 
+                } else {
+                    return radius(d.wealth) + 6
+                }
             }))
 
         const combine = () => {
@@ -757,8 +826,15 @@ d3.csv("wealth.csv", function(error, data) {
             .enter().append("circle")
             .attr('class', 'dot')
             .attr("r", function(d) {
-                return radius(d.wealth)
+                if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
+                    return null
+                } else {
+                    return radius(d.wealth)
+                }
             })
+            // .attr("r", function(d) {
+            //         return radius(d.wealth)
+            // })
             .attr("fill", '#CACAE3')
             .attr("stroke", '#BCBCDC')
             .attr('stroke-width', '3px')
@@ -771,10 +847,10 @@ d3.csv("wealth.csv", function(error, data) {
         function ticked() {
             circles
             .attr("cx", function(d) {
-                return d.x
+                    return d.x
             })
             .attr("cy", function(d) {
-                return d.y
+                    return d.y
             })
         }
 
@@ -939,11 +1015,64 @@ document.querySelector('.indian-population').innerHTML = `Percent of Worlds Popu
 })
 
 let charts = document.querySelectorAll('#chart');
-console.log('charts: ', charts)
 }
+
+
+document.querySelector('.country-select').onchange = loadBubbles
+
+
+function loadSecondChart() {
+    let testData = [
+        {
+            name: 'One Percent',
+            percentage: 45
+        },
+        {
+            name: 'Ninety Nine Percent',
+            percentage: 55
+        }
+    ]
+
+    let width,
+    height
+
+    if (isLaptop) {
+        width = 1500
+        height = 1300
+    } else {
+        width = 2000
+        height = 2000
+    }
+
+    const svg = d3.select('#second-chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr("transform", `translate(0,0)`)
+
+    let circles = svg.selectAll('.secondDot')
+        .data(testData)
+        .enter().append("circle")
+        .attr('class', 'secondDot')
+        .attr("r", 120)
+        .attr("fill", '#CACAE3')
+        .attr("stroke", '#BCBCDC')
+        .attr('stroke-width', '3px')
+        .attr('cx', function(d) {
+            if (d.name == 'One Percent') {
+                return 200
+            } else {
+                return 600
+            }
+        })
+        .attr('cy', 300)
+}
+
+
+
 
 window.onload = function() {
     loadBubbles();
+    loadSecondChart();
 };
-
-document.querySelector('.country-select').onchange = loadBubbles
