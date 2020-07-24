@@ -1,3 +1,23 @@
+/* #second-chart {
+    padding-top: 10vh;
+} */
+.second-chart-wrapper {
+    padding-top: 10vh;
+}
+
+.second-charts-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 600px;
+    /* border: 1px solid red; */
+}
 #second-chart {
-    border: 1px solid red;
+    /* border: 1px solid red; */
+    width: 50%;
+    flex: 1;
+}
+#population-chart {
+    /* border: 1px solid red; */
+    flex: 1;
 }

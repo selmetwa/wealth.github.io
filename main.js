@@ -531,7 +531,7 @@ d3.csv("wealth.csv", function(error, data) {
             height = 1300
         } else {
             width = 2000
-            height = 2000
+            height = 1200
         }
         
 
@@ -548,27 +548,7 @@ d3.csv("wealth.csv", function(error, data) {
                     <h3>Percentage of the World's Population: <span>${(d.population / totalPopulation * 100).toString().slice(0, 4)}%</span></h1>
                 </div>
                 `
-            } else if (d.name == 'onePercent') {
-                return `
-                <div class="scatterplot-tooltip">
-                    <h1>Country: Top One Percent</h1>
-                    <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
-                    <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
-                    <h3>Percentage of the World's Population: <span>1%</span></h1>
-                </div>
-                `
-            }
-            else if (d.name == 'ninetyNinePercent') {
-                return `
-                <div class="scatterplot-tooltip">
-                    <h1>Country: Bottom 99 Percent</h1>
-                    <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
-                    <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
-                    <h3>Percentage of the World's Population: <span>99%</span></h1>
-                </div>
-                `
-            }
-            
+            } 
         })
 
         const svg = d3.select('#chart')
@@ -579,7 +559,7 @@ d3.csv("wealth.csv", function(error, data) {
             .attr('class', 'wrapper')
             // .attr("transform", `translate(${width / 2}, ${height / 2})`)
             // .attr("transform ", translate(0,0))
-            .attr("transform", `translate(0,${height / 4.5})`)
+            .attr("transform", `translate(0,${height / 2.5})`)
         
         svg.call(tip);
 
@@ -752,6 +732,9 @@ d3.csv("wealth.csv", function(error, data) {
                 .force('y', d3.forceY().strength(0.1))
                 .alphaTarget(.05)
                 .restart()
+
+            document.querySelector('.second-chart-wrapper').style.paddingTop = '10vh'
+
         }
         const regions = () => {
             let regionWrapper = document.querySelectorAll('.regions-wrapper');
@@ -771,27 +754,32 @@ d3.csv("wealth.csv", function(error, data) {
                 .force("y", forceYAgain)
                 .alphaTarget(.3)
                 .restart()
+
+            document.querySelector('.second-chart-wrapper').style.paddingTop = '70vh'
         }
         const breakGlobal = () => {
             let textWrappers = document.querySelectorAll('.text-wrapper')
             textWrappers.forEach(wrapper => {
                 wrapper.style.display = 'block'
             })
-        let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
-        regionTextWrapper.forEach(wrapper => {
-            wrapper.style.display = 'none'
-        })
+            let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
+            regionTextWrapper.forEach(wrapper => {
+                wrapper.style.display = 'none'
+            })
 
-        let regionWrapper = document.querySelectorAll('.regions-wrapper');
-        regionWrapper.forEach(wrapper => {
-            wrapper.style.display = 'none'
-        })
-        simulation
-            .force("x", forceX)
-            .force('y', forceY)
-            .alphaTarget(.1)
-            .restart()
+            let regionWrapper = document.querySelectorAll('.regions-wrapper');
+            regionWrapper.forEach(wrapper => {
+                wrapper.style.display = 'none'
+            })
+            simulation
+                .force("x", forceX)
+                .force('y', forceY)
+                .alphaTarget(.1)
+                .restart()
+
+            document.querySelector('.second-chart-wrapper').style.paddingTop = '10vh'
         }
+
         d3.select('.combine').on('click', () => {
             regionIsClicked = false
             combineIsClicked = true
@@ -1031,6 +1019,8 @@ function loadSecondChart() {
             realWealth: 360474 * .45,
             wealth: `$${360474 * .45} Billion`,
             population: 1,
+            rawPop: '78 Million People',
+            raw: 78
         },
         {
             name: 'Bottom 99%',
@@ -1039,7 +1029,9 @@ function loadSecondChart() {
             row: '1',
             realWealth: 360474 * .55,
             wealth: `$${360474 * .55} Billion`,
-            population: 99
+            population: 99,
+            rawPop: '7720 Million People',
+            raw: 7720
         },
         {
             name: 'Top 5%',
@@ -1048,7 +1040,9 @@ function loadSecondChart() {
             row: '2',
             realWealth: 360474 * .70,
             wealth: `$${360474 * .70} Billion`,
-            population: 5
+            population: 5,
+            rawPop: '390 Million People',
+            raw: 390
         },
         {
             name: 'Bottom 95%',
@@ -1057,7 +1051,9 @@ function loadSecondChart() {
             row: '2',
             realWealth: 360474 * .30,
             wealth: `$${360474 * .30} Billion`,
-            population: 95
+            population: 95,
+            rawPop: '7410 Million People',
+            raw: 7410
         },
         {
             name: 'Top 10%',
@@ -1066,7 +1062,9 @@ function loadSecondChart() {
             row: '3',
             realWealth: 360474 * .82,
             wealth: `$${360474 * .82} Billion`,
-            population: 10
+            population: 10,
+            rawPop: '780 Million People',
+            raw: 780
         },
         {
             name: 'Bottom 90%',
@@ -1075,7 +1073,9 @@ function loadSecondChart() {
             row: '3',
             realWealth: 360474 * .18,
             wealth: `$${360474 * .18} Billion`,
-            population: 90
+            population: 90,
+            rawPop: '7020 Million People',
+            raw: 7020
         },
     ]
     let width,
@@ -1086,15 +1086,30 @@ function loadSecondChart() {
         height = 1300
     } else {
         width = 2000
-        height = 2000
+        height = 500
     }
 
     let radius
         if (isLaptop) {
             radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
         } else {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([1, 125])
+            radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
+            popRadius = d3.scaleSqrt().domain([1, 780]).range([1, 75])
         }
+
+    const tip = d3.tip()
+    .attr('class', 'first-d3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+            return `
+            <div class="scatterplot-tooltip">
+                <h1>${d.name}</h1>
+                <h3>Wealth: <span>${d.wealth}</span></h1>
+                <h3>Percent of World's Population: <span>${d.population}%</span></h1>
+                <h3>Percent of World's Wealth: <span>${d.percentage}%</span></h1>
+            </div>
+            `
+    })
 
     const svg = d3.select('#second-chart')
         .append("svg")
@@ -1103,8 +1118,47 @@ function loadSecondChart() {
         .append("g")
         .attr("transform", `translate(0,0)`)
 
-    let circles = svg.selectAll('.secondDot')
-        .data(percentileData)
+    const svgPop = d3.select('#population-chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr("transform", `translate(0,0)`)
+
+    svg.call(tip);
+    svgPop.call(tip);
+
+    let circlesPop = svg.selectAll('.popDot')
+        .data(percentileData.slice(0, 2))
+        .enter().append("circle")
+        .attr('class', 'popDot')
+        .attr("r", function(d) {
+            return popRadius(d.raw)
+        })
+        .attr("fill", '#f34f34')
+        .attr("stroke", '#f34f34')
+        .attr('stroke-width', '3px')
+        .attr('cx', function(d) {
+            if (d.position == 'Top') {
+                return 1100
+            } else {
+                return 1550
+            }
+        })
+        .attr('cy', function(d) {
+            if (d.row == '1') {
+                return 250
+            } else if (d.row == '2') {
+                return 1800
+            } else {
+                return 2000
+            }
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+
+        let circles = svg.selectAll('.secondDot')
+        .data(percentileData.slice(0, 2))
         .enter().append("circle")
         .attr('class', 'secondDot')
         .attr("r", function(d) {
@@ -1115,20 +1169,22 @@ function loadSecondChart() {
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
             if (d.position == 'Top') {
-                return 400
+                return 300
             } else {
-                return 1400
+                return 750
             }
         })
         .attr('cy', function(d) {
             if (d.row == '1') {
-                return 200
+                return 250
             } else if (d.row == '2') {
-                return 600
+                return 1100
             } else {
-                return 1200
+                return 2000
             }
         })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
 }
 
 
