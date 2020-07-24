@@ -1008,76 +1008,78 @@ let charts = document.querySelectorAll('#chart');
 
 document.querySelector('.country-select').onchange = loadBubbles
 
+let percentileData = [
+    {
+        name: 'Top 1%',
+        percentage: 45,
+        position: 'Top',
+        row: '1',
+        realWealth: 360474 * .45,
+        wealth: `$${360474 * .45} Billion`,
+        population: 1,
+        rawPop: '78 Million People',
+        raw: 78
+    },
+    {
+        name: 'Bottom 99%',
+        percentage: 55,
+        position: 'Bottom',
+        row: '1',
+        realWealth: 360474 * .55,
+        wealth: `$${360474 * .55} Billion`,
+        population: 99,
+        rawPop: '7720 Million People',
+        raw: 7720
+    },
+    {
+        name: 'Top 5%',
+        percentage: 70,
+        position: 'Top',
+        row: '2',
+        realWealth: 360474 * .70,
+        wealth: `$${360474 * .70} Billion`,
+        population: 5,
+        rawPop: '390 Million People',
+        raw: 390
+    },
+    {
+        name: 'Bottom 95%',
+        percentage: 30,
+        position: 'Bottom',
+        row: '2',
+        realWealth: 360474 * .30,
+        wealth: `$${360474 * .30} Billion`,
+        population: 95,
+        rawPop: '7410 Million People',
+        raw: 7410
+    },
+    {
+        name: 'Top 10%',
+        percentage: 82,
+        position: 'Top',
+        row: '3',
+        realWealth: 360474 * .82,
+        wealth: `$${360474 * .82} Billion`,
+        population: 10,
+        rawPop: '780 Million People',
+        raw: 780
+    },
+    {
+        name: 'Bottom 90%',
+        percentage: 18,
+        position: 'Bottom',
+        row: '3',
+        realWealth: 360474 * .18,
+        wealth: `$${360474 * .18} Billion`,
+        population: 90,
+        rawPop: '7020 Million People',
+        raw: 7020
+    },
+]
+
 
 function loadSecondChart() {
-    let percentileData = [
-        {
-            name: 'Top 1%',
-            percentage: 45,
-            position: 'Top',
-            row: '1',
-            realWealth: 360474 * .45,
-            wealth: `$${360474 * .45} Billion`,
-            population: 1,
-            rawPop: '78 Million People',
-            raw: 78
-        },
-        {
-            name: 'Bottom 99%',
-            percentage: 55,
-            position: 'Bottom',
-            row: '1',
-            realWealth: 360474 * .55,
-            wealth: `$${360474 * .55} Billion`,
-            population: 99,
-            rawPop: '7720 Million People',
-            raw: 7720
-        },
-        {
-            name: 'Top 5%',
-            percentage: 70,
-            position: 'Top',
-            row: '2',
-            realWealth: 360474 * .70,
-            wealth: `$${360474 * .70} Billion`,
-            population: 5,
-            rawPop: '390 Million People',
-            raw: 390
-        },
-        {
-            name: 'Bottom 95%',
-            percentage: 30,
-            position: 'Bottom',
-            row: '2',
-            realWealth: 360474 * .30,
-            wealth: `$${360474 * .30} Billion`,
-            population: 95,
-            rawPop: '7410 Million People',
-            raw: 7410
-        },
-        {
-            name: 'Top 10%',
-            percentage: 82,
-            position: 'Top',
-            row: '3',
-            realWealth: 360474 * .82,
-            wealth: `$${360474 * .82} Billion`,
-            population: 10,
-            rawPop: '780 Million People',
-            raw: 780
-        },
-        {
-            name: 'Bottom 90%',
-            percentage: 18,
-            position: 'Bottom',
-            row: '3',
-            realWealth: 360474 * .18,
-            wealth: `$${360474 * .18} Billion`,
-            population: 90,
-            rawPop: '7020 Million People',
-            raw: 7020
-        },
-    ]
+
     let width,
     height
 
@@ -1086,16 +1088,16 @@ function loadSecondChart() {
         height = 1300
     } else {
         width = 2000
-        height = 500
+        height = 700
     }
 
     let radius
-        if (isLaptop) {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
-        } else {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
-            popRadius = d3.scaleSqrt().domain([1, 780]).range([1, 75])
-        }
+    if (isLaptop) {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+    } else {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-30, 75])
+    }
 
     const tip = d3.tip()
     .attr('class', 'first-d3-tip')
@@ -1135,8 +1137,20 @@ function loadSecondChart() {
         .attr("r", function(d) {
             return popRadius(d.raw)
         })
-        .attr("fill", '#f34f34')
-        .attr("stroke", '#f34f34')
+        .attr("fill", function(d) {
+            if (d.position == 'Top') {
+                return '#CACAE3'
+            }  else {
+                return '#F8A163'        
+            }
+        })
+        .attr("stroke", function(d) {
+            if (d.position == 'Top') {
+                return '#BCBCDC'
+            }  else {
+                return '#F79550'        
+            }
+        })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
             if (d.position == 'Top') {
@@ -1147,7 +1161,7 @@ function loadSecondChart() {
         })
         .attr('cy', function(d) {
             if (d.row == '1') {
-                return 250
+                return 325
             } else if (d.row == '2') {
                 return 1800
             } else {
@@ -1164,8 +1178,20 @@ function loadSecondChart() {
         .attr("r", function(d) {
             return radius(d.realWealth)
         })
-        .attr("fill", '#CACAE3')
-        .attr("stroke", '#BCBCDC')
+        .attr("fill", function(d) {
+            if (d.position == 'Top') {
+                return '#CACAE3'
+            }  else {
+                return '#F8A163'        
+            }
+        })
+        .attr("stroke", function(d) {
+            if (d.position == 'Top') {
+                return '#BCBCDC'
+            }  else {
+                return '#F79550'        
+            }
+        })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
             if (d.position == 'Top') {
@@ -1176,7 +1202,7 @@ function loadSecondChart() {
         })
         .attr('cy', function(d) {
             if (d.row == '1') {
-                return 250
+                return 350
             } else if (d.row == '2') {
                 return 1100
             } else {
@@ -1187,10 +1213,280 @@ function loadSecondChart() {
         .on('mouseout', tip.hide)
 }
 
+function loadThirdChart() {
+    console.log('loaded third')
+    let width,
+    height
+    if (isLaptop) {
+        width = 1500
+        height = 1300
+    } else {
+        width = 2000
+        height = 700
+    }
 
+    let radius,
+    popRadius
+    if (isLaptop) {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+    } else {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-40, 75])
+    }
 
+    const tip = d3.tip()
+    .attr('class', 'first-d3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+            return `
+            <div class="scatterplot-tooltip">
+                <h1>${d.name}</h1>
+                <h3>Wealth: <span>${d.wealth}</span></h1>
+                <h3>Percent of World's Population: <span>${d.population}%</span></h1>
+                <h3>Percent of World's Wealth: <span>${d.percentage}%</span></h1>
+            </div>
+            `
+    })
+
+    const svg = d3.select('#third-chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr("transform", `translate(0,0)`)
+
+    const svgPop = d3.select('#second-population-chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr("transform", `translate(0,0)`)
+
+    svg.call(tip);
+    svgPop.call(tip);
+
+    let circlesPop = svg.selectAll('.popDot')
+        .data(percentileData.slice(2, 4))
+        .enter().append("circle")
+        .attr('class', 'popDot')
+        .attr("r", function(d) {
+            return popRadius(d.raw)
+        })
+        .attr("fill", function(d) {
+            if (d.position == 'Top') {
+                return '#CACAE3'
+            }  else {
+                return '#F8A163'        
+            }
+        })
+        .attr("stroke", function(d) {
+            if (d.position == 'Top') {
+                return '#BCBCDC'
+            }  else {
+                return '#F79550'        
+            }
+        })
+        .attr('stroke-width', '3px')
+        .attr('cx', function(d) {
+            if (d.position == 'Top') {
+                return 1100
+            } else {
+                return 1550
+            }
+        })
+        .attr('cy', function(d) {
+            console.log('third d.row: ', d.row)
+            if (d.row == '1') {
+                return 325
+            } else if (d.row == '2') {
+                return 325
+            } else {
+                return 325
+            }
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+
+        let circles = svg.selectAll('.secondDot')
+        .data(percentileData.slice(2, 4))
+        .enter().append("circle")
+        .attr('class', 'secondDot')
+        .attr("r", function(d) {
+            return radius(d.realWealth)
+        })
+        .attr("fill", function(d) {
+            if (d.position == 'Top') {
+                return '#CACAE3'
+            }  else {
+                return '#F8A163'        
+            }
+        })
+        .attr("stroke", function(d) {
+            if (d.position == 'Top') {
+                return '#BCBCDC'
+            }  else {
+                return '#F79550'        
+            }
+        })
+        .attr('stroke-width', '3px')
+        .attr('cx', function(d) {
+            if (d.position == 'Top') {
+                return 300
+            } else {
+                return 750
+            }
+        })
+        .attr('cy', function(d) {
+            if (d.row == '1') {
+                return 350
+            } else if (d.row == '2') {
+                return 325
+            } else {
+                return 325
+            }
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+}
+
+function loadFourthChart() {
+    let width,
+    height
+    if (isLaptop) {
+        width = 1500
+        height = 1300
+    } else {
+        width = 2000
+        height = 700
+    }
+
+    let radius,
+    popRadius
+    if (isLaptop) {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+    } else {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-40, 75])
+    }
+
+    const tip = d3.tip()
+    .attr('class', 'first-d3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+            return `
+            <div class="scatterplot-tooltip">
+                <h1>${d.name}</h1>
+                <h3>Wealth: <span>${d.wealth}</span></h1>
+                <h3>Percent of World's Population: <span>${d.population}%</span></h1>
+                <h3>Percent of World's Wealth: <span>${d.percentage}%</span></h1>
+            </div>
+            `
+    })
+
+    const svg = d3.select('#fourth-chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr("transform", `translate(0,0)`)
+
+    const svgPop = d3.select('#third-population-chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr("transform", `translate(0,0)`)
+
+    svg.call(tip);
+    svgPop.call(tip);
+
+    let circlesPop = svg.selectAll('.popDot')
+        .data(percentileData.slice(4, 6))
+        .enter().append("circle")
+        .attr('class', 'popDot')
+        .attr("r", function(d) {
+            return popRadius(d.raw)
+        })
+        .attr("fill", function(d) {
+            if (d.position == 'Top') {
+                return '#CACAE3'
+            }  else {
+                return '#F8A163'        
+            }
+        })
+        .attr("stroke", function(d) {
+            if (d.position == 'Top') {
+                return '#BCBCDC'
+            }  else {
+                return '#F79550'        
+            }
+        })
+        .attr('stroke-width', '3px')
+        .attr('cx', function(d) {
+            if (d.position == 'Top') {
+                return 1100
+            } else {
+                return 1550
+            }
+        })
+        .attr('cy', function(d) {
+            console.log('third d.row: ', d.row)
+            if (d.row == '1') {
+                return 325
+            } else if (d.row == '2') {
+                return 325
+            } else {
+                return 325
+            }
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+
+        let circles = svg.selectAll('.secondDot')
+        .data(percentileData.slice(4, 6))
+        .enter().append("circle")
+        .attr('class', 'secondDot')
+        .attr("r", function(d) {
+            return radius(d.realWealth)
+        })
+        .attr("fill", function(d) {
+            if (d.position == 'Top') {
+                return '#CACAE3'
+            }  else {
+                return '#F8A163'        
+            }
+        })
+        .attr("stroke", function(d) {
+            if (d.position == 'Top') {
+                return '#BCBCDC'
+            }  else {
+                return '#F79550'        
+            }
+        })
+        .attr('stroke-width', '3px')
+        .attr('cx', function(d) {
+            if (d.position == 'Top') {
+                return 300
+            } else {
+                return 750
+            }
+        })
+        .attr('cy', function(d) {
+            if (d.row == '1') {
+                return 350
+            } else if (d.row == '2') {
+                return 325
+            } else {
+                return 325
+            }
+        })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+}
 
 window.onload = function() {
     loadBubbles();
     loadSecondChart();
+    loadThirdChart();
+    loadFourthChart();
 };

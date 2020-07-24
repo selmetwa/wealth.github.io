@@ -1,6 +1,11 @@
-/* #second-chart {
-    padding-top: 10vh;
-} */
+.few {
+    font-weight: 900;
+    color: #5F5FAB;
+}
+.many {
+    font-weight: 900;
+    color: #F8A163;
+}
 .second-chart-wrapper {
     padding-top: 10vh;
 }
@@ -9,14 +14,8 @@
     display: flex;
     flex-direction: row;
     width: 100vw;
-    height: 600px;
-    /* border: 1px solid red; */
-}
-#second-chart {
-    /* border: 1px solid red; */
-}
-#population-chart {
-    /* border: 1px solid red; */
+    margin-top: 15vh;
+    height: 800px;
 }
 .lower-container {
     display: flex;
@@ -26,16 +25,21 @@
 }
 .lower-container h1 {
     margin-left: 10vw;
+    font-size: 1.4rem;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    color: #0a2540;
+    margin-top: 3%;
+    font-weight: 500;
 }
-/* .second-chart-container {
-    display: flex;
-    flex: 1;
-    width: 50%;
-    flex-direction: column;
+.lower-container h3 {
+    margin-left: 10vw;
+    font-size: 1.2rem;
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    color: #0a2540;
+    opacity: .9;
+    margin-top: 1%;
+    font-weight: 900;
 }
-.pop-chart-container {
-    display: flex;
-    flex: 1;
-    width: 50%;
-    flex-direction: column;  
-} */
+.lower-chart {
+    margin-top: 3vh;
+}
