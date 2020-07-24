@@ -14,10 +14,28 @@
 }
 #second-chart {
     /* border: 1px solid red; */
-    width: 50%;
-    flex: 1;
 }
 #population-chart {
     /* border: 1px solid red; */
-    flex: 1;
 }
+.lower-container {
+    display: flex;
+    flex: 1;
+    width: 50%;
+    flex-direction: column;  
+}
+.lower-container h1 {
+    margin-left: 10vw;
+}
+/* .second-chart-container {
+    display: flex;
+    flex: 1;
+    width: 50%;
+    flex-direction: column;
+}
+.pop-chart-container {
+    display: flex;
+    flex: 1;
+    width: 50%;
+    flex-direction: column;  
+} */
