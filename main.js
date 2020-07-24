@@ -61,21 +61,16 @@ const isLaptop = window.innerWidth <= 1900 ? true : false;
 const isMobile = window.matchMedia('screen and (max-width: 768px)').matches
 
 function loadBubbles() {
-    console.log('isLaptop: ', isLaptop)
 let totalPopulation = 0;
 let globalNorthPop = 0;
 let globalSouthPop = 0;
-d3.csv('pop.csv', function(error, pop) {
+d3.csv('data/pop.csv', function(error, pop) {
     pop.forEach(country => {
         let pop = Number(country.population.replace(/,/g, ''))
         totalPopulation += pop
     })
-d3.csv('extra.csv', function(error, extra) {
-    console.log('extra: ', extra)
-})
 document.querySelector('#chart').innerHTML = ''
-d3.csv("wealth.csv", function(error, data) {
-    console.log('data: ', data)
+d3.csv("data/wealth.csv", function(error, data) {
     let realCountries = []
     let countries = []
     let continentTotals = []
@@ -309,13 +304,11 @@ d3.csv("wealth.csv", function(error, data) {
                 })
                 latinAmericanCountries.push(country)
             } else {
-                console.log('country: ', country)
                 countries.push(country)
                 leftover.push(country)
             }
             totalWealth += countryWealth
     })
-    console.log('countries: ', countries)
     // afrique
     let africaTotal = 0
     africanCountries.forEach(country => {
@@ -521,7 +514,6 @@ d3.csv("wealth.csv", function(error, data) {
     // console.log('latinAmericanCountries: ', latinAmericanCountries)
     // console.log('oceaniaCountries: ', oceaniaCountries)
     // console.log('leftover: ', leftover)
-    console.log('totalWealth: ', totalWealth)
     // Chart
         let width,
         height
@@ -575,7 +567,6 @@ d3.csv("wealth.csv", function(error, data) {
         // about where we want our circles to go
         // and how we want our circles to interact
         const forceX = d3.forceX(function(d) {
-            console.log('d: ', d)
             if (isLaptop) {
                 if (d.position === 'Global North') {
                     return 350
@@ -597,7 +588,6 @@ d3.csv("wealth.csv", function(error, data) {
         */
 
         const testForceX = d3.forceX(function(d) {
-            console.log('d: ', d)
             if (isLaptop) {
                 if (d.position === 'Global North') {
                     return 350
@@ -707,7 +697,6 @@ d3.csv("wealth.csv", function(error, data) {
             .force('y', d3.forceY().strength(0.05))
             .force("collide", d3.forceCollide(function(d) {
                 if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
-                    console.log('hits')
                     return 0 
                 } else {
                     return radius(d.wealth) + 6
@@ -1096,7 +1085,7 @@ function loadSecondChart() {
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
-        popRadius = d3.scaleSqrt().domain([1, 780]).range([-30, 75])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-40, 75])
     }
 
     const tip = d3.tip()
@@ -1214,7 +1203,6 @@ function loadSecondChart() {
 }
 
 function loadThirdChart() {
-    console.log('loaded third')
     let width,
     height
     if (isLaptop) {
@@ -1295,7 +1283,6 @@ function loadThirdChart() {
             }
         })
         .attr('cy', function(d) {
-            console.log('third d.row: ', d.row)
             if (d.row == '1') {
                 return 325
             } else if (d.row == '2') {
@@ -1430,7 +1417,6 @@ function loadFourthChart() {
             }
         })
         .attr('cy', function(d) {
-            console.log('third d.row: ', d.row)
             if (d.row == '1') {
                 return 325
             } else if (d.row == '2') {
