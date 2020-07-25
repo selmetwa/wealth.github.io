@@ -559,7 +559,7 @@ d3.csv("data/wealth.csv", function(error, data) {
         if (isLaptop) {
             radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
         } else {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
+            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 160])
         }
         // radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
 
@@ -722,7 +722,7 @@ d3.csv("data/wealth.csv", function(error, data) {
                 .alphaTarget(.05)
                 .restart()
 
-            document.querySelector('.second-chart-wrapper').style.paddingTop = '10vh'
+            document.querySelector('.second-chart-wrapper').style.marginTop = '-10vh'
 
         }
         const regions = () => {
@@ -744,7 +744,7 @@ d3.csv("data/wealth.csv", function(error, data) {
                 .alphaTarget(.3)
                 .restart()
 
-            document.querySelector('.second-chart-wrapper').style.paddingTop = '70vh'
+            document.querySelector('.second-chart-wrapper').style.marginTop = '70vh'
         }
         const breakGlobal = () => {
             let textWrappers = document.querySelectorAll('.text-wrapper')
@@ -766,7 +766,7 @@ d3.csv("data/wealth.csv", function(error, data) {
                 .alphaTarget(.1)
                 .restart()
 
-            document.querySelector('.second-chart-wrapper').style.paddingTop = '10vh'
+            document.querySelector('.second-chart-wrapper').style.marginTop = '-10vh'
         }
 
         d3.select('.combine').on('click', () => {
@@ -1085,7 +1085,7 @@ function loadSecondChart() {
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
-        popRadius = d3.scaleSqrt().domain([1, 780]).range([-40, 75])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-20, 75])
     }
 
     const tip = d3.tip()
@@ -1143,7 +1143,7 @@ function loadSecondChart() {
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
             if (d.position == 'Top') {
-                return 1100
+                return 1150
             } else {
                 return 1550
             }
@@ -1219,7 +1219,7 @@ function loadThirdChart() {
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
-        popRadius = d3.scaleSqrt().domain([1, 780]).range([-40, 75])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-30, 75])
     }
 
     const tip = d3.tip()
@@ -1353,7 +1353,7 @@ function loadFourthChart() {
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
-        popRadius = d3.scaleSqrt().domain([1, 780]).range([-40, 75])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-20, 75])
     }
 
     const tip = d3.tip()

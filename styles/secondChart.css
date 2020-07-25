@@ -7,7 +7,7 @@
     color: #F8A163;
 }
 .second-chart-wrapper {
-    padding-top: 10vh;
+    margin-top: -10vh;
 }
 
 .second-charts-wrapper {
@@ -25,21 +25,25 @@
 }
 .lower-container h1 {
     margin-left: 10vw;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
     color: #0a2540;
     margin-top: 3%;
-    font-weight: 500;
+    font-weight: 900;
 }
 .lower-container h3 {
     margin-left: 10vw;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
     color: #0a2540;
-    opacity: .9;
+    opacity: .5;
+    letter-spacing: 1px;
     margin-top: 1%;
     font-weight: 900;
 }
 .lower-chart {
     margin-top: 3vh;
+}
+.hidden {
+    visibility: hidden;
 }
