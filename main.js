@@ -1203,7 +1203,7 @@ function loadThirdChart() {
     height
     if (isLaptop) {
         width = 1500
-        height = 1300
+        height = 700
     } else {
         width = 2000
         height = 700
@@ -1359,7 +1359,7 @@ function loadFourthChart() {
     height
     if (isLaptop) {
         width = 1500
-        height = 1300
+        height = 700
     } else {
         width = 2000
         height = 700

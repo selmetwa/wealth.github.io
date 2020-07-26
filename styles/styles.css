@@ -7,7 +7,6 @@ html {
     padding: 0;
     height: 100vh;
     overflow-x: hidden;
-    /* background-color: #fff!important; */
 }
 #chart {
     margin-top: 3vh!important;
@@ -42,14 +41,6 @@ html {
     display: flex;
     flex-direction: row;
 }
-/* .text-wrapper {
-    width: 15vw;
-    padding: 10px;    
-    background-color: #f5f5f5;
-    box-shadow: 0px 1px 3px rgba(34, 34, 34, 0.2); 
-    border-top: 3px solid #5F5FAB;
-    display: none;
-} */
 .text-wrapper {
     width: 15vw;
     padding: 10px;    
@@ -58,17 +49,6 @@ html {
     border-top: 3px solid #5F5FAB;
     display: none;
 }
-/* .region-text-wrapper {
-    width: 12vw;
-    background-color: #5F5FAB;
-    box-shadow: 0px 1px 3px rgba(34, 34, 34, 0.2); 
-    border-top: 3px solid #5F5FAB;
-    padding-bottom: 1%;
-    padding: 10px;
-    flex-direction: column;
-    margin-left: 7%;
-    display: none;
-} */
 .text-wrapper h1 {
     font-size: 1.2rem;
     font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
