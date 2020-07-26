@@ -431,6 +431,7 @@ d3.csv("data/wealth.csv", function(error, data) {
     // north america 
     let northAmericanTotal = 0
     northAmericanCountries.forEach(country => {
+        console.log('country: ', country)
         northAmericanTotal += country.wealth
     })
     northAmericanCountries.push({
@@ -520,7 +521,7 @@ d3.csv("data/wealth.csv", function(error, data) {
 
         if (isLaptop) {
             width = 1500
-            height = 1300
+            height = 1100
         } else {
             width = 2000
             height = 1200
@@ -549,15 +550,13 @@ d3.csv("data/wealth.csv", function(error, data) {
             .attr('width', width)
             .append("g")
             .attr('class', 'wrapper')
-            // .attr("transform", `translate(${width / 2}, ${height / 2})`)
-            // .attr("transform ", translate(0,0))
-            .attr("transform", `translate(0,${height / 2.5})`)
+            .attr("transform", isLaptop ? `translate(0,${height / 3})` : `translate(0,${height / 2.5})`)
         
         svg.call(tip);
 
         let radius
         if (isLaptop) {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 130])
         } else {
             radius = d3.scaleSqrt().domain([1, 105990]).range([2, 160])
         }
@@ -582,26 +581,6 @@ d3.csv("data/wealth.csv", function(error, data) {
             }
         }).strength(0.05)
 
-        /*
-            onePercent,top,"$45"
-            ninetyNinePercent,bottom,"$55"
-        */
-
-        const testForceX = d3.forceX(function(d) {
-            if (isLaptop) {
-                if (d.position === 'Global North') {
-                    return 350
-                } else {
-                    return 1000
-                }
-            } else {
-                if (d.name === 'onePercent') {
-                    return 500
-                } else if (d.name === 'ninetyNinePercent') {
-                    return 1400
-                }
-            }
-        }).strength(0.05)
 
         const forceY = d3.forceY(function(d) {
             if (isLaptop) {
@@ -631,7 +610,7 @@ d3.csv("data/wealth.csv", function(error, data) {
                     return 750
                 }
                 else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
-                    return 1050
+                    return 1025
                 }
                 else if (d.region === 'Latin America' || d.region == 'East Asia') {
                     return 1275
@@ -670,10 +649,10 @@ d3.csv("data/wealth.csv", function(error, data) {
                     || d.region == 'Eastern Europe'
                     || d.region == 'Latin America'
                     ) {
-                    return -130
+                    return -275
                 } 
                 else {
-                    return 440
+                    return 350
                 }
             } else {
                 if (
@@ -1073,8 +1052,8 @@ function loadSecondChart() {
     height
 
     if (isLaptop) {
-        width = 1500
-        height = 1300
+        width = 2000
+        height = 700
     } else {
         width = 2000
         height = 700
@@ -1083,6 +1062,7 @@ function loadSecondChart() {
     let radius
     if (isLaptop) {
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-20, 75])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
         popRadius = d3.scaleSqrt().domain([1, 780]).range([-20, 75])
@@ -1142,10 +1122,18 @@ function loadSecondChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.position == 'Top') {
-                return 1150
+            if (isLaptop) {
+                if (d.position == 'Top') {
+                    return 800
+                } else {
+                    return 1150
+                }
             } else {
-                return 1550
+                if (d.position == 'Top') {
+                    return 1150
+                } else {
+                    return 1550
+                }
             }
         })
         .attr('cy', function(d) {
@@ -1183,10 +1171,18 @@ function loadSecondChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.position == 'Top') {
-                return 300
+            if (isLaptop) {
+                if (d.position == 'Top') {
+                    return 225
+                } else {
+                    return 550
+                }
             } else {
-                return 750
+                if (d.position == 'Top') {
+                    return 300
+                } else {
+                    return 750
+                }
             }
         })
         .attr('cy', function(d) {
@@ -1217,6 +1213,7 @@ function loadThirdChart() {
     popRadius
     if (isLaptop) {
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-30, 75])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
         popRadius = d3.scaleSqrt().domain([1, 780]).range([-30, 75])
@@ -1276,10 +1273,23 @@ function loadThirdChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.position == 'Top') {
-                return 1100
+            // if (d.position == 'Top') {
+            //     return 1100
+            // } else {
+            //     return 1550
+            // }
+            if (isLaptop) {
+                if (d.position == 'Top') {
+                    return 825
+                } else {
+                    return 1200
+                }
             } else {
-                return 1550
+                if (d.position == 'Top') {
+                    return 1100
+                } else {
+                    return 1550
+                }
             }
         })
         .attr('cy', function(d) {
@@ -1317,10 +1327,18 @@ function loadThirdChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.position == 'Top') {
-                return 300
+            if (isLaptop) {
+                if (d.position == 'Top') {
+                    return 250
+                } else {
+                    return 575
+                }
             } else {
-                return 750
+                if (d.position == 'Top') {
+                    return 300
+                } else {
+                    return 750
+                }
             }
         })
         .attr('cy', function(d) {
@@ -1350,6 +1368,7 @@ function loadFourthChart() {
     let radius,
     popRadius
     if (isLaptop) {
+        popRadius = d3.scaleSqrt().domain([1, 780]).range([-30, 75])
         radius = d3.scaleSqrt().domain([1, 105990]).range([2, 110])
     } else {
         radius = d3.scaleSqrt().domain([1, 105990]).range([1, 120])
@@ -1410,10 +1429,19 @@ function loadFourthChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.position == 'Top') {
-                return 1100
-            } else {
-                return 1550
+            if (isLaptop) {
+                if (d.position == 'Top') {
+                    return 800
+                } else {
+                    return 1200
+                }
+            }
+            else {
+                if (d.position == 'Top') {
+                    return 1100
+                } else {
+                    return 1550
+                }
             }
         })
         .attr('cy', function(d) {
@@ -1451,10 +1479,24 @@ function loadFourthChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            if (d.position == 'Top') {
-                return 300
-            } else {
-                return 750
+            // if (d.position == 'Top') {
+            //     return 300
+            // } else {
+            //     return 750
+            // }
+            if (isLaptop) {
+                if (d.position == 'Top') {
+                    return 250
+                } else {
+                    return 550
+                }
+            }
+            else {
+                if (d.position == 'Top') {
+                    return 300
+                } else {
+                    return 750
+                }
             }
         })
         .attr('cy', function(d) {
