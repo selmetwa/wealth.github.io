@@ -311,167 +311,187 @@ d3.csv("data/wealth.csv", function(error, data) {
     })
     // afrique
     let africaTotal = 0
+    let africanTotalPercent = 0;
     africanCountries.forEach(country => {
         africaTotal += country.wealth
+        africanTotalPercent += country.percentage
     })
+    console.log('africaTotal: ', africaTotal)
+    console.log('totalWealth: ', totalWealth)
     africanCountries.push({
         name: 'Africa Total',
         region: 'Africa',
         total: africaTotal,
-        percentage: africaTotal / totalWealth * 100
+        percentage: africanTotalPercent.toString().slice(0, 4)
     })
     continentTotals.push({
         name: 'Africa',
         total: africaTotal,
-        percentage: africaTotal / totalWealth * 100
+        percentage: africanTotalPercent.toString().slice(0, 4)
     })
 
     // east asia
     let eastAsiaTotal = 0
+    let eastAsianTotalPercentage = 0
     eastAsianCountries.forEach(country => {
         eastAsiaTotal += country.wealth
+        eastAsianTotalPercentage += country.percentage
     })
     eastAsianCountries.push({
         name: 'East Asia Total',
         region: 'East Asia',
         total: eastAsiaTotal,
-        percentage: eastAsiaTotal / totalWealth * 100
+        percentage: eastAsianTotalPercentage.toString().slice(0, 4) 
     })
     continentTotals.push({
         name: 'East Asia',
         total: eastAsiaTotal,
-        percentage: eastAsiaTotal / totalWealth * 100
+        percentage: eastAsianTotalPercentage.toString().slice(0, 4)
     })
 
     // india
     let indiaTotal = 0
+    let indiaTotalPercentage = 0
     indianSubcontinentCountries.forEach(country => {
         indiaTotal += country.wealth
+        indiaTotalPercentage += country.percentage
     })
     indianSubcontinentCountries.push({
         name: 'Indian Subcontinent',
         region: 'Indian Subcontinent',
         total: indiaTotal,
-        percentage: indiaTotal / totalWealth * 100
+        percentage: indiaTotalPercentage.toString().slice(0, 4)
     })
     continentTotals.push({
         name: 'Indian Subcontinent',
         total: indiaTotal,
-        percentage: indiaTotal / totalWealth * 100
+        percentage: indiaTotalPercentage.toString().slice(0, 4)
     })
 
     // central asia
     let centralAsiaTotal = 0
+    let centralAsiaTotalPercentage = 0
     centralAsianCountries.forEach(country => {
         centralAsiaTotal += country.wealth
+        centralAsiaTotalPercentage += country.percentage
     })
     centralAsianCountries.push({
         name: 'Central Asia',
         region: 'Central Asia',
         total: centralAsiaTotal,
-        percentage: centralAsiaTotal / totalWealth * 100
+        percentage: centralAsiaTotalPercentage.toString().slice(0, 4)
     })
     continentTotals.push({
         name: 'Central Asia',
         total: centralAsiaTotal,
-        percentage: centralAsiaTotal / totalWealth * 100
+        percentage: centralAsiaTotalPercentage.toString().slice(0, 4)
     })
 
     // mena 
     let menaTotal = 0
+    let menaTotalPercentage = 0
     menaCountries.forEach(country => {
         menaTotal += country.wealth
+        menaTotalPercentage += country.percentage
     })
     menaCountries.push({
         name: 'MENA',
         region: 'MENA',
         total: menaTotal,
-        percentage: menaTotal / totalWealth * 100
+        percentage: menaTotalPercentage.toString().slice(0, 4)
     })
     continentTotals.push({
         name: 'MENA',
         total: menaTotal,
-        percentage: menaTotal / totalWealth * 100
+        percentage: menaTotalPercentage.toString().slice(0, 4)
     })
 
     // eastern europe 
     let easternEuropeTotal = 0
+    let easternEuropeTotalPercentage = 0
     easternEuropeanCountries.forEach(country => {
         easternEuropeTotal += country.wealth
+        easternEuropeTotalPercentage += country.percentage
     })
     easternEuropeanCountries.push({
         name: 'Eastern Europe',
         region: 'Eastern Europe',
         total: easternEuropeTotal,
-        percentage: easternEuropeTotal / totalWealth * 100
+        percentage: easternEuropeTotalPercentage.toString().slice(0,4)
     })
     continentTotals.push({
         name: 'Eastern Europe',
         total: easternEuropeTotal,
-        percentage: easternEuropeTotal / totalWealth * 100
+        percentage: easternEuropeTotalPercentage.toString().slice(0,4)
     })
 
     // western europe 
     let westernEuropeTotal = 0
+    let westernEuropeTotalPercentage = 0
     westernEuropeanCountries.forEach(country => {
         westernEuropeTotal += country.wealth
+        westernEuropeTotalPercentage += country.percentage
     })
     westernEuropeanCountries.push({
         name: 'Western Europe',
         region: 'Western Europe',
         total: westernEuropeTotal,
-        percentage: westernEuropeTotal / totalWealth * 100
+        percentage: westernEuropeTotalPercentage.toString().slice(0,4)
     })
     continentTotals.push({
         name: 'Western Europe',
         total: westernEuropeTotal,
-        percentage: westernEuropeTotal / totalWealth * 100
+        percentage: westernEuropeTotalPercentage.toString().slice(0,4)
     })
 
     // north america 
     let northAmericanTotal = 0
+    let northAmericanTotalPercent = 0
     northAmericanCountries.forEach(country => {
-        console.log('country: ', country)
         northAmericanTotal += country.wealth
+        northAmericanTotalPercent += country.percentage
     })
     northAmericanCountries.push({
         name: 'North America',
         region: 'North America',
         total: northAmericanTotal,
-        percentage: northAmericanTotal / totalWealth * 100
+        percentage: northAmericanTotalPercent.toString().slice(0, 4)
     })
     continentTotals.push({
         name: 'North America',
         total: northAmericanTotal,
-        percentage: northAmericanTotal / totalWealth * 100
+        percentage: northAmericanTotalPercent.toString().slice(0, 4)
     })
 
     // latin america 
     let latinAmericanTotal = 0
+    let latinAmericanTotalPercentage = 0
     latinAmericanCountries.forEach(country => {
         latinAmericanTotal += country.wealth
+        latinAmericanTotalPercentage += country.percentage
     })
     latinAmericanCountries.push({
         name: 'Latin America',
         region: 'Latin America',
         total: latinAmericanTotal,
-        percentage: latinAmericanTotal / totalWealth * 100
+        percentage: latinAmericanTotalPercentage.toString().slice(0,4)
     })
     continentTotals.push({
         name: 'Latin America',
         total: latinAmericanTotal,
-        percentage: latinAmericanTotal / totalWealth * 100
+        percentage: latinAmericanTotalPercentage.toString().slice(0,4)
     })
 
     let pacificTotal = 0
+    let pacificTotalPercentage = 0
     pacificCountries.forEach(country => {
         pacificTotal += country.wealth
+        pacificTotalPercentage += country.percentage
     })
-
     continentTotals.push({
         name: 'Pacific',
         total: pacificTotal,
-        percentage: pacificTotal / totalWealth * 100
+        percentage: pacificTotalPercentage.toString().slice(0,4)
     })
 
     const globalNorth = countries.filter(country => country.position == 'Global North')
@@ -953,6 +973,7 @@ document.querySelector('.western-europe-population').innerHTML = `Percent of Wor
 document.querySelector('.eastern-europe-population').innerHTML = `Percent of Worlds Population <span>${((easternEuropePop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 document.querySelector('.latin-population').innerHTML = `Percent of Worlds Population <span>${((latinPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 
+console.log('continentTotals: ', continentTotals)
 // bottom row 
 document.querySelector('.east-asia-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[1].percentage.toString().slice(0, 4)}%</span>`
 document.querySelector('.mena-percentage').innerHTML = `Percent of Global Weath <span>${continentTotals[4].percentage.toString().slice(0, 4)}%</span>`
