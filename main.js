@@ -118,16 +118,7 @@ d3.csv("data/wealth.csv", function(error, data) {
             } else {
                 countryWealth = 0
             }
-            if (country.name == 'onePercent') {
-                countries.push({
-                    name: country.name,
-                    region: 'Top',
-                    wealth: country.wealth,
-                    percentage: country.percentage,
-                    population: '1%'
-                })
-            }
-            else if (africa.includes(country.name)) {
+            if (africa.includes(country.name)) {
                 let currentCountry = pop.filter(test => test.indicator == country.name)
                 let currentPopulation
                 if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
@@ -308,6 +299,7 @@ d3.csv("data/wealth.csv", function(error, data) {
                 leftover.push(country)
             }
             totalWealth += countryWealth
+            console.log('leftover: ', leftover)
     })
     // afrique
     let africaTotal = 0
@@ -588,7 +580,7 @@ d3.csv("data/wealth.csv", function(error, data) {
         const forceX = d3.forceX(function(d) {
             if (isLaptop) {
                 if (d.position === 'Global North') {
-                    return 350
+                    return 360
                 } else {
                     return 1000
                 }
@@ -605,9 +597,9 @@ d3.csv("data/wealth.csv", function(error, data) {
         const forceY = d3.forceY(function(d) {
             if (isLaptop) {
                 if (d.position === 'Global North') {
-                    return -10
+                    return -75
                 } else {
-                    return -50
+                    return -110
                 }
             } else {
                 if (d.position === 'Global North') {
@@ -669,10 +661,10 @@ d3.csv("data/wealth.csv", function(error, data) {
                     || d.region == 'Eastern Europe'
                     || d.region == 'Latin America'
                     ) {
-                    return -275
+                    return -200
                 } 
                 else {
-                    return 350
+                    return 450
                 }
             } else {
                 if (
