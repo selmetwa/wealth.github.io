@@ -1,6 +1,45 @@
 .footer {
     margin-top: 10vh;
-    height: 25vh;
+    height: 35vh;
     width: 100vw;
     background: #f5f5f5;
+    /* border-bottom: 5vh solid #e2e2e2; */
+}
+.footer-bottom {
+    background: #e2e2e2;
+    height: 5vh;
+}
+.footer-contents {
+    margin-left: 10vw;
+    padding-top: 2vh;
+}
+.footer-contents h3 span {
+    font-family: Lato, Avenir, Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    opacity: .5;
+    color: #323648;
+    margin-right: .5%;
+}
+.footer-contents h3 {
+    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #323648;
+    opacity: .75;
+    margin-top: 3vh;
+}
+.footer-contents a {
+    font-family: Lato, Avenir, Arial, Helvetica, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #F8A163;
+    margin: 1px;
+    opacity: .9;
+    font-weight: 200;
+    margin-top: 3vh;
+    /* margin-left: .3vw; */
+}
+.footer-last {
+    padding-bottom: 5vh!important;
 }
