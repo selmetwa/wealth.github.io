@@ -82,11 +82,9 @@ d3.csv("data/wealth.csv", function(error, data) {
     let westernEuropeanCountries = []
     let eastAsianCountries = []
     let centralAsianCountries = []
-    let southEastAsianCountries = []
     let indianSubcontinentCountries = []
     let northAmericanCountries = []
     let latinAmericanCountries = []
-    let oceaniaCountries = []
     let pacificCountries = []
     let leftover = []
     data.forEach(country => {
@@ -111,7 +109,6 @@ d3.csv("data/wealth.csv", function(error, data) {
     })
 
     realCountries.slice(0, realCountries.length).forEach(country => {
-            // let countryWealth = country.wealth
             let countryWealth 
             if (country.wealth) {
                 countryWealth = country.wealth
@@ -284,7 +281,6 @@ d3.csv("data/wealth.csv", function(error, data) {
                 let currentCountry = pop.filter(test => test.indicator == country.name)
                 let currentPopulation
                 if (currentCountry.length > 0) { currentPopulation = Number(currentCountry[0].population.replace(/,/g, ''))} 
-                let percentage = toString(country.percentage)
                 countries.push({
                     name: country.name,
                     region: 'Latin America',
@@ -299,7 +295,6 @@ d3.csv("data/wealth.csv", function(error, data) {
                 leftover.push(country)
             }
             totalWealth += countryWealth
-            console.log('leftover: ', leftover)
     })
     // afrique
     let africaTotal = 0
@@ -308,8 +303,6 @@ d3.csv("data/wealth.csv", function(error, data) {
         africaTotal += country.wealth
         africanTotalPercent += country.percentage
     })
-    console.log('africaTotal: ', africaTotal)
-    console.log('totalWealth: ', totalWealth)
     africanCountries.push({
         name: 'Africa Total',
         region: 'Africa',
@@ -508,323 +501,302 @@ d3.csv("data/wealth.csv", function(error, data) {
             globalSouthPop += pop
         }
     })
-    // console.log('globalNorthPop: ', globalNorthPop)
-    // console.log('globalSouthPop: ', globalSouthPop)
-    // console.log('globalNorth: ', globalNorth)
-    // console.log('globalSouth: ', globalSouth)
-    // console.log('countries: ', countries)
-    // console.log('pacificCountries: ', pacificCountries)
-    // console.log('data: ', data)
-    // console.log('africanCountries: ', africanCountries)
-    // console.log('menaCountries: ', menaCountries)
-    // console.log('easternEuropeanCountries: ', easternEuropeanCountries)
-    // console.log('westernEuropeanCountries: ', westernEuropeanCountries)
-    // console.log('easternEuropeanCountries: ', easternEuropeanCountries)
-    // console.log('eastAsianCountries: ', eastAsianCountries)
-    // console.log('southEastAsianCountries: ', southEastAsianCountries)
-    // console.log('indianSubcontinentCountries: ', indianSubcontinentCountries)
-    // console.log('northAmericanCountries: ', northAmericanCountries)
-    // console.log('latinAmericanCountries: ', latinAmericanCountries)
-    // console.log('oceaniaCountries: ', oceaniaCountries)
-    // console.log('leftover: ', leftover)
+
     // Chart
-        let width,
-        height
+    let width,
+    height
 
+    if (isLaptop) {
+        width = 1500
+        height = 1100
+    } else {
+        width = 2000
+        height = 1200
+    }
+    
+
+    const tip = d3.tip()
+    .attr('class', 'first-d3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+        if (d.name != 'onePercent' && d.name != 'ninetyNinePercent') {
+            return `
+            <div class="scatterplot-tooltip">
+                <h1>Country: ${d.name}</h1>
+                <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
+                <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
+                <h3>Percentage of the World's Population: <span>${(d.population / totalPopulation * 100).toString().slice(0, 4)}%</span></h1>
+            </div>
+            `
+        } 
+    })
+
+    const svg = d3.select('#chart')
+        .append("svg")
+        .attr('height', height)
+        .attr('width', width)
+        .append("g")
+        .attr('class', 'wrapper')
+        .attr("transform", isLaptop ? `translate(0,${height / 3})` : `translate(0,${height / 2.5})`)
+    
+    svg.call(tip);
+
+    let radius
+    if (isLaptop) {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([2, 130])
+    } else {
+        radius = d3.scaleSqrt().domain([1, 105990]).range([2, 160])
+    }
+    // radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
+
+    // the simulation is a collection of forces
+    // about where we want our circles to go
+    // and how we want our circles to interact
+    const forceX = d3.forceX(function(d) {
         if (isLaptop) {
-            width = 1500
-            height = 1100
+            if (d.position === 'Global North') {
+                return 360
+            } else {
+                return 1000
+            }
         } else {
-            width = 2000
-            height = 1200
+            if (d.position === 'Global North') {
+                return 500
+            } else {
+                return 1400
+            }
+        }
+    }).strength(0.05)
+
+
+    const forceY = d3.forceY(function(d) {
+        if (isLaptop) {
+            if (d.position === 'Global North') {
+                return -75
+            } else {
+                return -110
+            }
+        } else {
+            if (d.position === 'Global North') {
+                return -100
+            } else {
+                return -150
+            }
         }
         
+    }).strength(0.05)
 
-        const tip = d3.tip()
-        .attr('class', 'first-d3-tip')
-        .offset([-10, 0])
-        .html(function(d) {
-            if (d.name != 'onePercent' && d.name != 'ninetyNinePercent') {
-                return `
-                <div class="scatterplot-tooltip">
-                    <h1>Country: ${d.name}</h1>
-                    <h3>Wealth in Billions: <span>$${d.wealth}</span></h1>
-                    <h3>Percentage of the World's Wealth: <span>${d.percentage.toString().slice(0, 4)}%</span></h1>
-                    <h3>Percentage of the World's Population: <span>${(d.population / totalPopulation * 100).toString().slice(0, 4)}%</span></h1>
-                </div>
-                `
+    const forceXAgain = d3.forceX(function(d) {
+        if (isLaptop) {
+            if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
+                return 450
+            } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
+                return 150
+            }
+            else if (d.region === 'Western Europe' || d.region == 'North America') {
+                return 750
+            }
+            else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
+                return 1025
+            }
+            else if (d.region === 'Latin America' || d.region == 'East Asia') {
+                return 1275
+            }
+            else {
+                return 200
+            }
+        } else {
+            if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
+                return 600
+            } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
+                return 200
+            }
+            else if (d.region === 'Western Europe' || d.region == 'North America') {
+                return 1000
+            }
+            else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
+                return 1400
+            }
+            else if (d.region === 'Latin America' || d.region == 'East Asia') {
+                return 1700
+            }
+            else {
+                return 200
+            }
+        }
+        
+    }).strength(0.05)
+
+    const forceYAgain = d3.forceY(function(d) {
+        if (isLaptop) {
+            if (
+                d.region === 'Africa' 
+                || d.region === 'Pacific' 
+                || d.region == 'Western Europe'
+                || d.region == 'Eastern Europe'
+                || d.region == 'Latin America'
+                ) {
+                return -200
             } 
-        })
-
-        const svg = d3.select('#chart')
-            .append("svg")
-            .attr('height', height)
-            .attr('width', width)
-            .append("g")
-            .attr('class', 'wrapper')
-            .attr("transform", isLaptop ? `translate(0,${height / 3})` : `translate(0,${height / 2.5})`)
-        
-        svg.call(tip);
-
-        let radius
-        if (isLaptop) {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 130])
+            else {
+                return 450
+            }
         } else {
-            radius = d3.scaleSqrt().domain([1, 105990]).range([2, 160])
-        }
-        // radius = d3.scaleSqrt().domain([1, 105990]).range([2, 150])
-
-        // the simulation is a collection of forces
-        // about where we want our circles to go
-        // and how we want our circles to interact
-        const forceX = d3.forceX(function(d) {
-            if (isLaptop) {
-                if (d.position === 'Global North') {
-                    return 360
-                } else {
-                    return 1000
-                }
-            } else {
-                if (d.position === 'Global North') {
-                    return 500
-                } else {
-                    return 1400
-                }
+            if (
+                d.region === 'Africa' 
+                || d.region === 'Pacific' 
+                || d.region == 'Western Europe'
+                || d.region == 'Eastern Europe'
+                || d.region == 'Latin America'
+                ) {
+                return -250
+            } 
+            else {
+                return 500
             }
-        }).strength(0.05)
-
-
-        const forceY = d3.forceY(function(d) {
-            if (isLaptop) {
-                if (d.position === 'Global North') {
-                    return -75
-                } else {
-                    return -110
-                }
-            } else {
-                if (d.position === 'Global North') {
-                    return -100
-                } else {
-                    return -150
-                }
-            }
-            
-        }).strength(0.05)
-
-        const forceXAgain = d3.forceX(function(d) {
-            if (isLaptop) {
-                if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
-                    return 450
-                } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
-                    return 150
-                }
-                else if (d.region === 'Western Europe' || d.region == 'North America') {
-                    return 750
-                }
-                else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
-                    return 1025
-                }
-                else if (d.region === 'Latin America' || d.region == 'East Asia') {
-                    return 1275
-                }
-                else {
-                    return 200
-                }
-            } else {
-                if (d.region === 'Africa' || d.region === 'Middle East & North Africa') {
-                    return 600
-                } else if (d.region === 'Pacific' || d.region == 'Indian Subcontinent') {
-                    return 200
-                }
-                else if (d.region === 'Western Europe' || d.region == 'North America') {
-                    return 1000
-                }
-                else if (d.region === 'Eastern Europe' || d.region == 'Central Asia') {
-                    return 1400
-                }
-                else if (d.region === 'Latin America' || d.region == 'East Asia') {
-                    return 1700
-                }
-                else {
-                    return 200
-                }
-            }
-            
-        }).strength(0.05)
-
-        const forceYAgain = d3.forceY(function(d) {
-            if (isLaptop) {
-                if (
-                    d.region === 'Africa' 
-                    || d.region === 'Pacific' 
-                    || d.region == 'Western Europe'
-                    || d.region == 'Eastern Europe'
-                    || d.region == 'Latin America'
-                    ) {
-                    return -200
-                } 
-                else {
-                    return 450
-                }
-            } else {
-                if (
-                    d.region === 'Africa' 
-                    || d.region === 'Pacific' 
-                    || d.region == 'Western Europe'
-                    || d.region == 'Eastern Europe'
-                    || d.region == 'Latin America'
-                    ) {
-                    return -250
-                } 
-                else {
-                    return 500
-                }
-            }
-            
-        }).strength(0.05)
-
-        const simulation = d3.forceSimulation()
-            .force("x", d3.forceX(width / 2).strength(0.05))
-            .force('y', d3.forceY().strength(0.05))
-            .force("collide", d3.forceCollide(function(d) {
-                if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
-                    return 0 
-                } else {
-                    return radius(d.wealth) + 6
-                }
-            }))
-
-        const combine = () => {
-            let textWrappers = document.querySelectorAll('.text-wrapper')
-            textWrappers.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-            let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
-            regionTextWrapper.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-            let regionWrapper = document.querySelectorAll('.regions-wrapper');
-            regionWrapper.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-            simulation
-                .force("x", d3.forceX(width / 2).strength(0.1))
-                .force('y', d3.forceY().strength(0.1))
-                .alphaTarget(.05)
-                .restart()
-
-            document.querySelector('.second-chart-wrapper').style.marginTop = '-10vh'
-
-        }
-        const regions = () => {
-            let regionWrapper = document.querySelectorAll('.regions-wrapper');
-            regionWrapper.forEach(wrapper => {
-                wrapper.style.display = 'flex'
-            })
-            let textWrappers = document.querySelectorAll('.text-wrapper')
-            textWrappers.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-            let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
-            regionTextWrapper.forEach(wrapper => {
-                wrapper.style.display = 'flex'
-            })
-            simulation
-                .force("x", forceXAgain)
-                .force("y", forceYAgain)
-                .alphaTarget(.3)
-                .restart()
-
-            document.querySelector('.second-chart-wrapper').style.marginTop = '70vh'
-        }
-        const breakGlobal = () => {
-            let textWrappers = document.querySelectorAll('.text-wrapper')
-            textWrappers.forEach(wrapper => {
-                wrapper.style.display = 'block'
-            })
-            let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
-            regionTextWrapper.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-
-            let regionWrapper = document.querySelectorAll('.regions-wrapper');
-            regionWrapper.forEach(wrapper => {
-                wrapper.style.display = 'none'
-            })
-            simulation
-                .force("x", forceX)
-                .force('y', forceY)
-                .alphaTarget(.1)
-                .restart()
-
-            document.querySelector('.second-chart-wrapper').style.marginTop = '-10vh'
-        }
-
-        d3.select('.combine').on('click', () => {
-            regionIsClicked = false
-            combineIsClicked = true
-            globalIsClicked = false
-            combine()
-        })
-        d3.select('.region').on('click', () => {
-            regionIsClicked = true
-            combineIsClicked = false
-            globalIsClicked = false
-            regions()
-        })
-        d3.select('.global').on('click', () => {
-            regionIsClicked = false
-            combineIsClicked = false
-            globalIsClicked = true
-            breakGlobal()
-        })
-
-        if (regionIsClicked) {
-            regions()
-        } else if (globalIsClicked) {
-            breakGlobal()
-        } else if (combineIsClicked){
-            combine()
         }
         
+    }).strength(0.05)
 
-        let targetCountries = getSpecificCountries()
-        let circles = svg.selectAll('.dot')
-            .data(countries)
-            .enter().append("circle")
-            .attr('class', 'dot')
-            .attr("r", function(d) {
-                if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
-                    return null
-                } else {
-                    return radius(d.wealth)
-                }
-            })
-            // .attr("r", function(d) {
-            //         return radius(d.wealth)
-            // })
-            .attr("fill", '#CACAE3')
-            .attr("stroke", '#BCBCDC')
-            .attr('stroke-width', '3px')
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
-        
-        simulation.nodes(countries)
-            .on('tick', ticked)
+    const simulation = d3.forceSimulation()
+        .force("x", d3.forceX(width / 2).strength(0.05))
+        .force('y', d3.forceY().strength(0.05))
+        .force("collide", d3.forceCollide(function(d) {
+            if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
+                return 0 
+            } else {
+                return radius(d.wealth) + 6
+            }
+        }))
 
-        function ticked() {
-            circles
-            .attr("cx", function(d) {
-                    return d.x
-            })
-            .attr("cy", function(d) {
-                    return d.y
-            })
-        }
+    const combine = () => {
+        let textWrappers = document.querySelectorAll('.text-wrapper')
+        textWrappers.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+        let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
+        regionTextWrapper.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+        let regionWrapper = document.querySelectorAll('.regions-wrapper');
+        regionWrapper.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+        simulation
+            .force("x", d3.forceX(width / 2).strength(0.1))
+            .force('y', d3.forceY().strength(0.1))
+            .alphaTarget(.05)
+            .restart()
 
-        d3.selectAll('.dot')
-        .filter(function(d) {return targetCountries.includes(d.name )})
-        .classed('specificCountry', function(d) {return targetCountries.includes(d.name)})
+        document.querySelector('.second-chart-wrapper').style.marginTop = '-10vh'
+
+    }
+    const regions = () => {
+        let regionWrapper = document.querySelectorAll('.regions-wrapper');
+        regionWrapper.forEach(wrapper => {
+            wrapper.style.display = 'flex'
+        })
+        let textWrappers = document.querySelectorAll('.text-wrapper')
+        textWrappers.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+        let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
+        regionTextWrapper.forEach(wrapper => {
+            wrapper.style.display = 'flex'
+        })
+        simulation
+            .force("x", forceXAgain)
+            .force("y", forceYAgain)
+            .alphaTarget(.3)
+            .restart()
+
+        document.querySelector('.second-chart-wrapper').style.marginTop = '70vh'
+    }
+    const breakGlobal = () => {
+        let textWrappers = document.querySelectorAll('.text-wrapper')
+        textWrappers.forEach(wrapper => {
+            wrapper.style.display = 'block'
+        })
+        let regionTextWrapper = document.querySelectorAll('.region-text-wrapper')
+        regionTextWrapper.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+
+        let regionWrapper = document.querySelectorAll('.regions-wrapper');
+        regionWrapper.forEach(wrapper => {
+            wrapper.style.display = 'none'
+        })
+        simulation
+            .force("x", forceX)
+            .force('y', forceY)
+            .alphaTarget(.1)
+            .restart()
+
+        document.querySelector('.second-chart-wrapper').style.marginTop = '-10vh'
+    }
+
+    d3.select('.combine').on('click', () => {
+        regionIsClicked = false
+        combineIsClicked = true
+        globalIsClicked = false
+        combine()
+    })
+    d3.select('.region').on('click', () => {
+        regionIsClicked = true
+        combineIsClicked = false
+        globalIsClicked = false
+        regions()
+    })
+    d3.select('.global').on('click', () => {
+        regionIsClicked = false
+        combineIsClicked = false
+        globalIsClicked = true
+        breakGlobal()
+    })
+
+    if (regionIsClicked) {
+        regions()
+    } else if (globalIsClicked) {
+        breakGlobal()
+    } else if (combineIsClicked){
+        combine()
+    }
+    
+
+    let targetCountries = getSpecificCountries()
+    let circles = svg.selectAll('.dot')
+        .data(countries)
+        .enter().append("circle")
+        .attr('class', 'dot')
+        .attr("r", function(d) {
+            if (d.region == 'Top' || d.region == 'bottom' || d.region == 'top') {
+                return null
+            } else {
+                return radius(d.wealth)
+            }
+        })
+        .attr("fill", '#CACAE3')
+        .attr("stroke", '#BCBCDC')
+        .attr('stroke-width', '3px')
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
+    
+    simulation.nodes(countries)
+        .on('tick', ticked)
+
+    function ticked() {
+        circles
+        .attr("cx", function(d) {
+                return d.x
+        })
+        .attr("cy", function(d) {
+                return d.y
+        })
+    }
+
+    d3.selectAll('.dot')
+    .filter(function(d) {return targetCountries.includes(d.name )})
+    .classed('specificCountry', function(d) {return targetCountries.includes(d.name)})
 
 
 $('.country-select').selectpicker();
@@ -843,7 +815,6 @@ globalSouth.forEach(country => {
     globalSouthTotalPercentage += country.percentage
 })
 
-// const pacific = countries.filter(country => country.region == 'Pacific')
 let pacificPop = 0
 let realPacificCountries = []
 pacificCountries.forEach(country => { realPacificCountries.push(country.name)})
@@ -980,10 +951,7 @@ document.querySelector('.central-asia-population').innerHTML = `Percent of World
 document.querySelector('.indian-population').innerHTML = `Percent of Worlds Population <span>${((indianPop / totalPopulation) * 100 + 1).toString().slice(0, 4) + 1}%</span>`
 
 })
-
 })
-
-let charts = document.querySelectorAll('#chart');
 }
 
 
@@ -1286,11 +1254,6 @@ function loadThirdChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            // if (d.position == 'Top') {
-            //     return 1100
-            // } else {
-            //     return 1550
-            // }
             if (isLaptop) {
                 if (d.position == 'Top') {
                     return 825
@@ -1492,11 +1455,6 @@ function loadFourthChart() {
         })
         .attr('stroke-width', '3px')
         .attr('cx', function(d) {
-            // if (d.position == 'Top') {
-            //     return 300
-            // } else {
-            //     return 750
-            // }
             if (isLaptop) {
                 if (d.position == 'Top') {
                     return 250
