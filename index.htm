@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Visualize Wealth</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/styles.css">
-    <link rel="stylesheet" href="styles/regions-wrapper.css">
-    <link rel="stylesheet" href="styles/tip.css">
-    <link rel="stylesheet" href="styles/buttons.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/secondChart.css">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://d3js.org/queue.v1.min.js"></script>
-    <script src="https://d3js.org/topojson.v1.min.js"></script>
-    <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
-    <script src='https://unpkg.com/simple-statistics@2.0.0/dist/simple-statistics.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-    <script defer src="main.js"></script>
-    <script defer src="buttons.js"></script>
-    <script defer src="d3-tip.js"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Visualize Wealth</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/regions-wrapper.css">
+  <link rel="stylesheet" href="styles/tip.css">
+  <link rel="stylesheet" href="styles/buttons.css">
+  <link rel="stylesheet" href="styles/sidebar.css">
+  <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styles/footer.css">
+  <link rel="stylesheet" href="styles/secondChart.css">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/queue.v1.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+  <script src='https://unpkg.com/simple-statistics@2.0.0/dist/simple-statistics.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <script defer src="main.js"></script>
+  <script defer src="buttons.js"></script>
+  <script defer src="d3-tip.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
 </head>
+
 <body>
-    <div class="header">
-        <div class="title-wrapper">
-            <img src="assets/man.jpeg" class="man">
-            <h1>Visualize the World's Wealth</h1>
-        </div>
-        <div class="paragraph-wrapper">
-            <p>There is a lot of money in the world, interact with the chart below to see owns what.</p>
-            <p class="note">Note: Due to screensize limitations, the bubbles are not to scale</p>
-        </div>
+  <div class="header">
+    <div class="title-wrapper">
+      <img src="assets/man.jpeg" class="man">
+      <h1>Visualize the World's Wealth</h1>
     </div>
-    <div class="chart-select-wrapper">
-        <div class="select-wrapper">
-            <h3>Highlight a Specific Country</h3>
-            <select class="country-select injectHere" id="chkveg" multiple data-actions-box="true" data-live-search="true" title="Choose a specific country..." data-width="auto">
+    <div class="paragraph-wrapper">
+      <p>There is a lot of money in the world, interact with the chart below to see owns what.</p>
+      <p class="note">Note: Due to screensize limitations, the bubbles are not to scale</p>
+      <p class="note">Note: Data is from 2020ish</p>
+    </div>
+  </div>
+  <div class="chart-select-wrapper">
+    <div class="select-wrapper">
+      <h3>Highlight a Specific Country</h3>
+      <select class="country-select injectHere" id="chkveg" multiple data-actions-box="true" data-live-search="true" title="Choose a specific country..." data-width="auto">
                     <option class="asia">Afghanistan</option>
                     <option class="europe">Albania</option>
                     <option class="africa">Algeria</option>
@@ -252,138 +255,95 @@
                     <option class="africa">Zambia</option>
                     <option class="africa">Zimbabwe</option>
             </select>
-        </div>
-        <div class="real-button-wrapper">
-            <h3>You cant see me</h3>
-            <div class="buttons-wrapper">
-                <button class="combine button active">Combine</button>
-                <button class="global button inactive">Global North vs Global South</button>
-                <button class="region button inactive">Divide by Region</button>
-            </div>
-        </div>
     </div>
-    <div class="north-south-wrapper">
-        <div class="north-wrapper text-wrapper">
-            <h1>Global North</h1>
-            <h3 class="north-percentage positive">Global North</h3>
-            <h3 class="north-population negative"></h3>
-        </div>
-        <div class="south-wrapper text-wrapper">
-            <h1>Global South</h1>
-            <h3 class="south-percentage negative"></h3>
-            <h3 class="south-population positive"></h3>
-        </div>
+    <div class="real-button-wrapper">
+      <h3>You cant see me</h3>
+      <div class="buttons-wrapper">
+        <button class="combine button active">Combine</button>
+        <button class="global button inactive">Global North vs Global South</button>
+        <button class="region button inactive">Divide by Region</button>
+      </div>
     </div>
-    
-    <div class="regions-wrapper top">
-        <div class="region-wrapper region-text-wrapper pacific-wrapper">
-            <h1>Pacific</h1>
-            <h3 class="pacific-percentage"></h3>
-            <h3 class="pacific-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper africa-wrapper">
-            <h1>Africa</h1>
-            <h3 class="africa-percentage"></h3>
-            <h3 class="africa-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper western-europe-wrapper">
-            <h1>Western Europe</h1>
-            <h3 class="western-europe-percentage"></h3>
-            <h3 class="western-europe-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper eastern-europe-wrapper">
-            <h1>Eastern Europe</h1>
-            <h3 class="eastern-europe-percentage"></h3>
-            <h3 class="eastern-europe-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper latin-wrapper">
-            <h1>Latin America</h1>
-            <h3 class="latin-percentage"></h3>
-            <h3 class="latin-population"></h3>
-        </div>
+  </div>
+  <div class="north-south-wrapper">
+    <div class="north-wrapper text-wrapper">
+      <h1>Global North</h1>
+      <h3 class="north-percentage positive">Global North</h3>
+      <h3 class="north-population negative"></h3>
     </div>
-    <div id="chart"></div>
-    
-    <div class="regions-wrapper bottom">
-        <div class="region-wrapper region-text-wrapper indian-wrapper bottom-region-wrapper">
-            <h1>Indian Subcontinent</h1>
-            <h3 class="indian-percentage"></h3>
-            <h3 class="indian-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper mena-wrapper bottom-region-wrapper">
-            <h1>Middle East & North Africa</h1>
-            <h3 class="mena-percentage"></h3>
-            <h3 class="mena-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper north-america-wrapper bottom-region-wrapper">
-            <h1>North America</h1>
-            <h3 class="north-america-percentage"></h3>
-            <h3 class="north-america-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper central-asia-wrapper bottom-region-wrapper">
-            <h1>Central Asia</h1>
-            <h3 class="central-asia-percentage"></h3>
-            <h3 class="central-asia-population"></h3>
-        </div>
-        <div class="region-wrapper region-text-wrapper east-asia-wrapper bottom-region-wrapper">
-            <h1>East Asia</h1>
-            <h3 class="east-asia-percentage"></h3>
-            <h3 class="east-asia-population"></h3>
-        </div>
+    <div class="south-wrapper text-wrapper">
+      <h1>Global South</h1>
+      <h3 class="south-percentage negative"></h3>
+      <h3 class="south-population positive"></h3>
     </div>
-    <div class="second-chart-wrapper">
-        <div class="header">
-            <div class="paragraph-wrapper">
-                <p>There are not only large disparities between certain countries and regions, 
-                there is a massive gap in wealth between the <span class="few">few at the top</span>
-                and the <span class="many">many at the bottom</span></p>
-            </div>
-        </div>
-        <div class="second-charts-wrapper">
-            <div class="second-chart-container lower-container">
-                <h1>Top <span class="few">1%</span> - Bottom <span class="many">99%</span></h1>
-                <h3>WEALTH DISTRIBUTION</h3>
-                <div id="second-chart" class="lower-chart"></div>
-            </div>
-            <div class="pop-chart-wrapper lower-container">
-                <h1 class="hidden">Top <span class="few">1%</span> - Bottom <span class="many">99%</span></h1>
-                <h3>POPULATION DISTRIBUTION</h3>
-                <div id="population-chart" class="lower-chart"></div>
-            </div>
-        </div>
-        <div class="second-charts-wrapper">
-            <div class="second-chart-container lower-container">
-                <h1>Top <span class="few">5%</span> - Bottom <span class="many">95%</span></h1>
-                <h3>WEALTH DISTRIBUTION</h3>
-                <div id="third-chart" class="lower-chart"></div>
-            </div>
-            <div class="pop-chart-wrapper lower-container">
-                <h1 class="hidden">Population Distribution</h1>
-                <h3>POPULATION DISTRIBUTION</h3>
-                <div id="second-population-chart" class="lower-chart"></div>
-            </div>
-        </div>
-        <div class="second-charts-wrapper">
-            <div class="second-chart-container lower-container">
-                <h1>Top <span class="few">10%</span> - Bottom <span class="many">90%</span></h1>
-                <h3>WEALTH DISTRIBUTION</h3>
-                <div id="fourth-chart" class="lower-chart"></div>
-            </div>
-            <div class="pop-chart-wrapper lower-container">
-                <h1 class="hidden">POPULATION DISTRIBUTION</h1>
-                <h3>POPULATION DISTRIBUTION</h3>
-                <div id="third-population-chart" class="lower-chart"></div>
-            </div>
-        </div>
+  </div>
+
+  <div class="regions-wrapper top">
+    <div class="region-wrapper region-text-wrapper pacific-wrapper">
+      <h1>Pacific</h1>
+      <h3 class="pacific-percentage"></h3>
+      <h3 class="pacific-population"></h3>
     </div>
+    <div class="region-wrapper region-text-wrapper africa-wrapper">
+      <h1>Sub-Saharan Africa</h1>
+      <h3 class="africa-percentage"></h3>
+      <h3 class="africa-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper western-europe-wrapper">
+      <h1>Western Europe</h1>
+      <h3 class="western-europe-percentage"></h3>
+      <h3 class="western-europe-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper eastern-europe-wrapper">
+      <h1>Eastern Europe</h1>
+      <h3 class="eastern-europe-percentage"></h3>
+      <h3 class="eastern-europe-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper latin-wrapper">
+      <h1>Latin America</h1>
+      <h3 class="latin-percentage"></h3>
+      <h3 class="latin-population"></h3>
+    </div>
+  </div>
+  <div id="chart"></div>
+
+  <div class="regions-wrapper bottom">
+    <div class="region-wrapper region-text-wrapper indian-wrapper bottom-region-wrapper">
+      <h1>Indian Subcontinent</h1>
+      <h3 class="indian-percentage"></h3>
+      <h3 class="indian-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper mena-wrapper bottom-region-wrapper">
+      <h1>Middle East & North Africa</h1>
+      <h3 class="mena-percentage"></h3>
+      <h3 class="mena-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper north-america-wrapper bottom-region-wrapper">
+      <h1>North America</h1>
+      <h3 class="north-america-percentage"></h3>
+      <h3 class="north-america-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper central-asia-wrapper bottom-region-wrapper">
+      <h1>Central Asia</h1>
+      <h3 class="central-asia-percentage"></h3>
+      <h3 class="central-asia-population"></h3>
+    </div>
+    <div class="region-wrapper region-text-wrapper east-asia-wrapper bottom-region-wrapper">
+      <h1>East Asia</h1>
+      <h3 class="east-asia-percentage"></h3>
+      <h3 class="east-asia-population"></h3>
+    </div>
+  </div>
+  <div class="second-chart-wrapper">
     <div class="footer">
-        <div class="footer-contents">
-            <h3><span>Built By</span><a href="https://github.com/sherif-ffs" target="_blank">Sherif Elmetwally</a></h3>
-            <h3><span>Tools Used</span>D3.js, JavaScript, CSS</h3>
-            <h3><span>Datasets</span><a href="https://data.world/makeovermonday/2020w7-world-wealth/workspace/file?filename=WorldWealth.xlsx" target="_blank">WorldWealth</a></h3>
-            <h3 class="footer-last"><span>Inspired By</span><a href="https://www.visualcapitalist.com/all-of-the-worlds-wealth-in-one-visualization/" target="_blank">All of the World's Wealth in One Visualization</a></h3>
-        </div>
-        <div class="footer-bottom"></div>
+      <div class="footer-contents">
+        <h3><span>Built By</span><a href="https://github.com/sherif-ffs" target="_blank">Sherif Elmetwally</a></h3>
+        <h3><span>Tools Used</span>D3.js, JavaScript, CSS</h3>
+        <h3><span>Datasets</span><a href="https://data.world/makeovermonday/2020w7-world-wealth/workspace/file?filename=WorldWealth.xlsx" target="_blank">WorldWealth</a></h3>
+        <h3 class="footer-last"><span>Inspired By</span><a href="https://www.visualcapitalist.com/all-of-the-worlds-wealth-in-one-visualization/" target="_blank">All of the World's Wealth in One Visualization</a></h3>
+      </div>
+      <div class="footer-bottom"></div>
     </div>
 </body>
+
 </html>

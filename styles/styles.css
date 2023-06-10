@@ -1,76 +1,93 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
+
 html {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow-x: hidden;
 }
+
 #chart {
-    margin-top: 3vh!important;
+  margin-top: 1vh!important;
 }
+
+svg {
+  height: min-content;
+}
+
 .chart-select-wrapper {
-    margin-top: 5vh!important;
-    margin-left: 15vh!important;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10vh;
+  margin-top: 5vh!important;
+  margin-left: 15vh!important;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10vh;
 }
+
 .select-wrapper {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+
 .select-wrapper h3 {
-    font-size: 1.2rem;
-    margin-left: 0%;
-    font-weight: 500;
-    opacity: .9;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    color: #0a2540;
+  font-size: 1.2rem;
+  margin-left: 0%;
+  font-weight: 500;
+  opacity: .9;
+  font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+  color: #0a2540;
 }
+
 .specificCountry {
-    fill: #F8A163!important;
-    stroke: #F79550!important;
+  fill: #F8A163!important;
+  stroke: #F79550!important;
 }
+
 .north-south-wrapper {
-    width: 100vw;
-    height: min-content;
-    margin-top: 5vh;
-    display: flex;
-    flex-direction: row;
+  width: 100vw;
+  height: min-content;
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: row;
 }
+
 .text-wrapper {
-    width: 15vw;
-    padding: 10px;    
-    background-color: #5F5FAB;
-    box-shadow: 0px 5px 1px #38386B; 
-    border-top: 3px solid #5F5FAB;
-    display: none;
+  width: 15vw;
+  padding: 10px;
+  background-color: #e8e8e8;
+  box-shadow: 0px 5px 1px #ccc;
+  border-top: 3px solid #e8e8e8;
+  display: none;
 }
+
 .text-wrapper h1 {
-    font-size: 1.2rem;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    color: #fff;
-    margin-top: 3%;
-    font-weight: 900;
-    margin-left: 5%;
+  font-size: 1.2rem;
+  font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+  color: #323648;
+  margin-top: 3%;
+  font-weight: 900;
+  margin-left: 5%;
 }
+
 .text-wrapper h3 {
-    font-size: 1rem;
-    margin-left: 5%;
-    font-weight: 100;
-    opacity: .9;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    color: #fff;
+  font-size: 1rem;
+  margin-left: 5%;
+  font-weight: 100;
+  opacity: .9;
+  font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
+  color: #323648;
 }
+
 .text-wrapper h3 span {
-    font-weight: 900;
+  font-weight: 900;
 }
+
 .north-wrapper {
-    margin-left: 19vw;
+  margin-left: 19vw;
 }
+
 .south-wrapper {
-    margin-left: 30vw;
+  margin-left: 30vw;
 }

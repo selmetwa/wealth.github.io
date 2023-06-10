@@ -1,38 +1,43 @@
 .header {
-    width: 100vw;
-    /* height: 35vh; */
-    margin-bottom: 8vh;
+  width: 100vw;
+  /* height: 35vh; */
+  margin-bottom: 8vh;
 }
+
 .title-wrapper {
-    margin-top: 10vh;
-    margin-left: 15vh;
-    display: flex;
-    flex-direction: row;
+  margin-top: 10vh;
+  margin-left: 15vh;
+  display: flex;
+  flex-direction: row;
 }
+
 .man {
-    height: 5rem;
-    opacity: .7;
-    width: auto;
+  height: 5rem;
+  opacity: .7;
+  width: auto;
 }
+
 .header h1 {
-    color: #0a2540;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    font-weight: 900;
-    font-size: 3rem;
-    margin-top: 2vh;
-    margin-left: 1vw;
+  color: #0a2540;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  margin-top: 2vh;
+  margin-left: 1vw;
 }
+
 .header p {
-    color: #0a2540;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    opacity: .7;
-    font-size: 1.6rem;
-    width: 60%;
-    margin-left: 15vh;
-    margin-top: 1vh;
+  color: #0a2540;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  opacity: .7;
+  font-size: 1.6rem;
+  width: 60%;
+  margin-left: 15vh;
+  margin-top: 1vh;
 }
+
 .note {
-    opacity: .5!important;
-    font-size: 1.2rem!important;
+  opacity: .5!important;
+  font-size: 1.2rem!important;
 }

@@ -1,50 +1,56 @@
 .real-button-wrapper {
-    margin-left: 3vw;
-    width: 30vw;
+  margin-left: 3vw;
+  width: 30vw;
 }
+
 .real-button-wrapper h3 {
-    font-size: 1.2rem;
-    margin-left: 5%;
-    font-weight: 100;
-    opacity: 1;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    color: #0a2540;
-    visibility: hidden;
+  font-size: 1.2rem;
+  margin-left: 5%;
+  font-weight: 100;
+  opacity: 1;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  color: #0a2540;
+  visibility: hidden;
 }
 
 .button {
-    padding-top: .3rem;
-    padding-bottom: .3rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 3px;
-    font-family: Avenir, Lato, Arial, Helvetica, sans-serif;
-    font-size: 1rem;
-    border: 0;
-    transition: .3s ease-in-out;
+  padding-top: .3rem;
+  padding-bottom: .3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 3px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  border: 0;
+  transition: .3s ease-in-out;
 }
 
 .button:hover {
-    background-color: #5F5FAB;
-    color: #fafafa;
+  background-color: #5F5FAB;
+  color: #fafafa;
 }
+
 .active {
-    background-color: #5F5FAB;
-    color: #fafafa;
+  background-color: #5F5FAB;
+  color: #fafafa;
 }
+
 .inactive {
-    background-color: rgb(235, 235, 235);
-    color: rgb(179, 179, 179);
+  background-color: rgb(235, 235, 235);
+  color: rgb(179, 179, 179);
 }
+
 .region {
-    margin-left: 4%;
+  margin-left: 4%;
 }
+
 .global {
-    margin-left: 4%;
+  margin-left: 4%;
 }
+
 @media screen and (max-width: 1900px) {
-    .real-button-wrapper {
-        margin-left: 3vw;
-        width: 40vw;
-    }
+  .real-button-wrapper {
+    margin-left: 3vw;
+    width: 40vw;
+  }
 }
