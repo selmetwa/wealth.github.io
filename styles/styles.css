@@ -18,6 +18,12 @@ svg {
   height: min-content;
 }
 
+.sorry {
+  padding: 20px;
+  font-size: 24px;
+  display: block;
+}
+
 .chart-select-wrapper {
   margin-top: 5vh!important;
   margin-left: 15vh!important;
